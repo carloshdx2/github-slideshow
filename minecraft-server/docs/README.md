@@ -58,6 +58,9 @@ ideia em documentos estruturados antes de partir para infraestrutura e plugins.
     **bloco 4**: convenção de ID/tier, catálogo proposto de minérios/
     pedras de alma/poções, e as primeiras receitas amarradas às
     permissões de profissão.
+12. [PangeiaCore — plugin próprio](./pangeia-core.md) — **bloco 5**:
+    mochilas (cargo/profissão/místicas), maldição do ligamento e
+    pergaminhos de teleporte, com a arquitetura anti-duplicação.
 
 ## Status
 

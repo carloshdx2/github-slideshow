@@ -77,19 +77,26 @@ terceiros não devem ir pro git):
 
 ```
 minecraft-server/
-  docs/                     # já existe — documentação de design
+  docs/                     # documentação de design
   server/
     README.md               # como fazer o deploy no host gerenciado
     server.properties        # template de configuração do servidor
     plugins-checklist.md     # checklist de instalação, um item por plugin
     config/                  # configs (.yml) versionadas de cada plugin
       luckperms/
+      essentialsx/
+      multiverse-core/
       valhallammo/
       oraxen/
       mythicmobs/
       worldguard/
-    pangeia-core/            # (futuro) plugin Java próprio — módulos do item acima
+  pangeia-core/             # plugin Java próprio (bloco 5) — código-fonte
 ```
+
+O `pangeia-core/` ficou fora de `server/` de propósito: `server/` guarda
+configuração que vai para dentro do servidor, enquanto `pangeia-core/` é
+código-fonte que o GitHub Actions compila. Ver
+[PangeiaCore](./pangeia-core.md).
 
 Vou criar agora o esqueleto (`server/README.md`, `server.properties` e o
 checklist). As pastas de config de cada plugin ficam vazias por enquanto —

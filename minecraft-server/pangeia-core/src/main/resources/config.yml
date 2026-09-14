@@ -1,0 +1,197 @@
+# PangeiaCore — configuração
+#
+# O conteúdo de cada mochila NÃO fica dentro do item: o item guarda só um
+# UUID, e o conteúdo vive em plugins/PangeiaCore/mochilas/<uuid>.yml. Por
+# isso copiar/duplicar o item não duplica o conteúdo — as cópias apontam
+# para o mesmo armazenamento.
+
+mochilas:
+  autosave-segundos: 300
+
+  # A textura vem do resource pack do Oraxen: declare no Oraxen um item com
+  # o mesmo material + custom-model-data usado aqui (faixa 17000-17999 já
+  # reservada para mochilas em docs/itens-oraxen-valhalla.md).
+  #
+  # O material-base precisa ser um item "inerte": nada de BUNDLE ou SHULKER_BOX,
+  # que já têm armazenamento próprio no vanilla e brigariam com a mochila.
+  tipos:
+    mistica_simples:
+      nome: '&5Mochila Mística Simples'
+      material: LEATHER
+      custom-model-data: 17001
+      linhas: 1
+      # Maldição do ligamento: a mochila não cai quando o jogador morre.
+      ligamento: true
+      # Místicas "são mais pesadas, então demoram para abrir".
+      atraso-abertura-ticks: 40
+
+    mistica_comum:
+      nome: '&dMochila Mística Comum'
+      material: LEATHER
+      custom-model-data: 17002
+      linhas: 2
+      ligamento: false
+      atraso-abertura-ticks: 20
+
+    cargo_aurora:
+      nome: '&bMochila de Cargo: Aurora'
+      material: LEATHER
+      custom-model-data: 17010
+      linhas: 3
+      # Só quem tem o cargo consegue abrir (permissão pangeia.cargo.aurora).
+      cargo: aurora
+      ligamento: false
+      atraso-abertura-ticks: 0
+
+    profissao_lenhador:
+      nome: '&6Mochila de Lenhador'
+      material: LEATHER
+      custom-model-data: 17020
+      linhas: 3
+      # Só aceita itens da lista itens-por-profissao.lenhador.
+      profissao: lenhador
+      ligamento: false
+      atraso-abertura-ticks: 0
+
+    profissao_minerador:
+      nome: '&7Mochila de Minerador'
+      material: LEATHER
+      custom-model-data: 17021
+      linhas: 3
+      profissao: minerador
+      ligamento: false
+      atraso-abertura-ticks: 0
+
+    profissao_pescador:
+      nome: '&9Mochila de Pescador'
+      material: LEATHER
+      custom-model-data: 17022
+      linhas: 3
+      profissao: pescador
+      ligamento: false
+      atraso-abertura-ticks: 0
+
+    profissao_botanico:
+      nome: '&aMochila de Botânico'
+      material: LEATHER
+      custom-model-data: 17023
+      linhas: 3
+      profissao: botanico
+      ligamento: false
+      atraso-abertura-ticks: 0
+
+# Itens que cada mochila de profissão aceita. Materiais vanilla pelo nome,
+# itens do Oraxen com o prefixo "oraxen:". Lista vazia = aceita tudo.
+itens-por-profissao:
+  lenhador:
+    - OAK_LOG
+    - SPRUCE_LOG
+    - BIRCH_LOG
+    - JUNGLE_LOG
+    - ACACIA_LOG
+    - DARK_OAK_LOG
+    - MANGROVE_LOG
+    - CHERRY_LOG
+    - CRIMSON_STEM
+    - WARPED_STEM
+    - OAK_PLANKS
+    - SPRUCE_PLANKS
+    - BIRCH_PLANKS
+    - JUNGLE_PLANKS
+    - ACACIA_PLANKS
+    - DARK_OAK_PLANKS
+    - STICK
+    - OAK_SAPLING
+    - SPRUCE_SAPLING
+    - BIRCH_SAPLING
+
+  minerador:
+    - COBBLESTONE
+    - STONE
+    - DEEPSLATE
+    - COBBLED_DEEPSLATE
+    - COAL
+    - RAW_IRON
+    - RAW_COPPER
+    - RAW_GOLD
+    - IRON_INGOT
+    - COPPER_INGOT
+    - GOLD_INGOT
+    - REDSTONE
+    - LAPIS_LAZULI
+    - DIAMOND
+    - EMERALD
+    - oraxen:minerio_lixo_ferrobrenho
+    - oraxen:minerio_lixo_cobreruneo
+    - oraxen:minerio_lixo_estanhocinza
+    - oraxen:minerio_lixo_chumbonegro
+    - oraxen:minerio_lixo_zincopalido
+    - oraxen:po_lixo_ferrobrenho
+    - oraxen:po_lixo_cobreruneo
+    - oraxen:po_lixo_estanhocinza
+    - oraxen:po_lixo_chumbonegro
+    - oraxen:po_lixo_zincopalido
+    - oraxen:fragmento_lixo_ferrobrenho
+    - oraxen:fragmento_lixo_cobreruneo
+    - oraxen:fragmento_lixo_estanhocinza
+    - oraxen:fragmento_lixo_chumbonegro
+    - oraxen:fragmento_lixo_zincopalido
+
+  pescador:
+    - COD
+    - SALMON
+    - TROPICAL_FISH
+    - PUFFERFISH
+    - COOKED_COD
+    - COOKED_SALMON
+    - FISHING_ROD
+    - KELP
+    - SEAGRASS
+    - NAUTILUS_SHELL
+    - INK_SAC
+    - PRISMARINE_SHARD
+    - PRISMARINE_CRYSTALS
+
+  botanico:
+    - WHEAT
+    - WHEAT_SEEDS
+    - BEETROOT_SEEDS
+    - MELON_SEEDS
+    - PUMPKIN_SEEDS
+    - SUGAR_CANE
+    - BAMBOO
+    - CACTUS
+    - VINE
+    - BROWN_MUSHROOM
+    - RED_MUSHROOM
+    - DANDELION
+    - POPPY
+    - BLUE_ORCHID
+    - ALLIUM
+    - CORNFLOWER
+    - LILY_OF_THE_VALLEY
+    - SWEET_BERRIES
+    - GLOW_BERRIES
+    - NETHER_WART
+
+# Maldição do ligamento: itens que NÃO caem quando o jogador morre.
+# Mochilas marcadas com "ligamento: true" já entram automaticamente.
+ligamento:
+  oraxen-ids:
+    - pergaminho_teleporte
+  materiais: []
+
+pergaminhos:
+  # Tempo de conjuração antes do teleporte. Existe de propósito: teleporte
+  # instantâneo viraria rota de fuga garantida em PvP.
+  tempo-conjuracao-ticks: 60
+  # O dano sofrido durante a conjuração cancela o teleporte.
+  cancelar-ao-tomar-dano: true
+  destinos:
+    pergaminho_teleporte:
+      mundo: world
+      x: 0.5
+      y: 70.0
+      z: 0.5
+      yaw: 0.0
+      pitch: 0.0

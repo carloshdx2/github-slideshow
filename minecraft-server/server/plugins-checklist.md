@@ -55,13 +55,19 @@ oficial linkada — evite mirrors/sites de "download grátis" genéricos.
       [docs/itens-oraxen-valhalla.md](../docs/itens-oraxen-valhalla.md)
       antes de replicar pros outros tiers de minério
 
-## Plugin próprio (`PangeiaCore`)
+## Plugin próprio (`PangeiaCore`) — bloco 5
 
-Ainda não existe — vai nascer no Bloco 5. Módulos planejados:
+Código em `minecraft-server/pangeia-core/`, documentação em
+[docs/pangeia-core.md](../docs/pangeia-core.md). O `.jar` sai pronto no
+GitHub Actions (aba **Actions** → **Build PangeiaCore** → artefato).
 
-- [ ] Mochilas (cargo / profissão / místicas + maldição do ligamento)
-- [ ] Níveis de profissão 0/3/5/7 (gate de receitas por tier)
+- [x] Mochilas (cargo / profissão / místicas)
+- [x] Maldição do ligamento (item não cai ao morrer)
+- [x] Pergaminhos de teleporte (com tempo de conjuração)
+- [ ] Subir o `.jar` no servidor e rodar a checklist de teste em jogo
 - [ ] Invocações: vitalidade, evolução, skins raras/sazonais, aluguel 3 dias
-- [ ] Pergaminhos de teleporte
 - [ ] Trava de item de luz/trevas no mercado negro
 - [ ] Reset agendado do mundo de recursos
+- [ ] Níveis de profissão 0/3/5/7 (gate de receitas por tier — hoje o
+      ValhallaMMO já resolve via permissão, só entra aqui se precisarmos de
+      regra que ele não cubra)

@@ -1,0 +1,36 @@
+name: Build PangeiaCore
+
+on:
+  push:
+    paths:
+      - 'minecraft-server/pangeia-core/**'
+      - '.github/workflows/build-pangeia-core.yml'
+  pull_request:
+    paths:
+      - 'minecraft-server/pangeia-core/**'
+      - '.github/workflows/build-pangeia-core.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Compilar o plugin
+        working-directory: minecraft-server/pangeia-core
+        run: mvn -B -ntp package
+
+      - name: Publicar o jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: PangeiaCore
+          path: minecraft-server/pangeia-core/target/PangeiaCore-*.jar
+          if-no-files-found: error
