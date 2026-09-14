@@ -9,6 +9,7 @@ import io.github.carloshdx2.pangeia.mochila.FiltroProfissao;
 import io.github.carloshdx2.pangeia.mochila.ItensMochila;
 import io.github.carloshdx2.pangeia.mochila.OuvinteMochila;
 import io.github.carloshdx2.pangeia.mochila.ServicoMochila;
+import io.github.carloshdx2.pangeia.mundo.ServicoResetMundo;
 import io.github.carloshdx2.pangeia.pergaminho.OuvintePergaminho;
 import io.github.carloshdx2.pangeia.pergaminho.ServicoPergaminho;
 import java.util.LinkedHashMap;
@@ -23,6 +24,7 @@ public final class PangeiaCore extends JavaPlugin {
     private ServicoMochila servicoMochila;
     private ServicoLigamento servicoLigamento;
     private ServicoPergaminho servicoPergaminho;
+    private ServicoResetMundo servicoResetMundo;
     private FiltroProfissao filtroProfissao;
     private int tarefaAutosave = -1;
 
@@ -36,6 +38,7 @@ public final class PangeiaCore extends JavaPlugin {
         servicoMochila = new ServicoMochila(this, new ArmazenamentoMochila(this), itens, filtroProfissao);
         servicoLigamento = new ServicoLigamento(chaves);
         servicoPergaminho = new ServicoPergaminho(this);
+        servicoResetMundo = new ServicoResetMundo(this);
 
         aplicarConfiguracao();
 
@@ -59,6 +62,9 @@ public final class PangeiaCore extends JavaPlugin {
         if (servicoPergaminho != null) {
             servicoPergaminho.cancelarTudo();
         }
+        if (servicoResetMundo != null) {
+            servicoResetMundo.parar();
+        }
     }
 
     public void recarregar() {
@@ -75,6 +81,7 @@ public final class PangeiaCore extends JavaPlugin {
         servicoMochila.definirDefinicoes(carregarDefinicoes());
         servicoLigamento.carregar(getConfig().getConfigurationSection("ligamento"));
         servicoPergaminho.carregar(getConfig().getConfigurationSection("pergaminhos"));
+        servicoResetMundo.carregar(getConfig().getConfigurationSection("reset-mundo-recursos"));
         reagendarAutosave();
     }
 
@@ -128,5 +135,9 @@ public final class PangeiaCore extends JavaPlugin {
 
     public ServicoMochila servicoMochila() {
         return servicoMochila;
+    }
+
+    public ServicoResetMundo servicoResetMundo() {
+        return servicoResetMundo;
     }
 }

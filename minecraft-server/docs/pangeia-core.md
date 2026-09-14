@@ -47,9 +47,9 @@ Outras proteções que vieram junto:
 | **Maldição do ligamento** (item não cai ao morrer) | Pronto |
 | **Pergaminho de teleporte** (com tempo de conjuração) | Pronto |
 | Comando `/pangeia mochila dar` (usado também pelo Tebex) | Pronto |
+| **Reset agendado do mundo de recursos** | Pronto (desligado por padrão) |
 | Invocações (vitalidade, skins, aluguel) | Não começou |
 | Trava de luz/trevas no mercado negro | Não começou |
-| Reset agendado do mundo de recursos | Não começou |
 | Gate de receita por tier de profissão | Não começou (hoje o ValhallaMMO já resolve por permissão) |
 
 ### Detalhes que valem saber
@@ -65,6 +65,13 @@ Outras proteções que vieram junto:
   levar dano cancela a leitura, e o pergaminho só é consumido no fim.
 - **Material-base das mochilas**: `LEATHER`, não `BUNDLE`. O bundle do
   vanilla tem armazenamento próprio e brigaria com o nosso.
+- **Reset do mundo de recursos**: vem **desligado** na config. Regenerar um
+  mundo apaga tudo que há nele e não tem desfazer, então preferi exigir uma
+  decisão consciente a deixar ligado por padrão. O plugin também **se recusa
+  a ligar** se o mundo configurado for o mundo principal ou o mundo de
+  saída — um erro de digitação ali apagaria o servidor inteiro. Quem
+  regenera de fato é o Multiverse (`mv regen`); o plugin só conta o tempo,
+  avisa quem está no mundo e tira todo mundo de lá antes.
 
 ## Como pegar o `.jar`
 
@@ -100,17 +107,23 @@ ser conferido por você:
 - [ ] Sem o cargo, tentar abrir a `cargo_aurora` → recusa
 - [ ] Com `lp user <voce> parent add cargo-aurora`, abre
 - [ ] Pergaminho: levar dano durante a leitura cancela o teleporte
+- [ ] `/pangeia recursos` mostra quanto falta para o próximo reset
+- [ ] Com `reset-mundo-recursos.ativado: true` e um `intervalo-dias` curto
+      só para teste, conferir que os avisos chegam e que o mundo regenera
+      (teste isso num mundo descartável, nunca no principal)
 
 ## Pontos em aberto
 
-- **[em aberto]** A mochila de profissão hoje é **fixa por profissão** (uma
-  de botânico, uma de lenhador...). A frase original das notas ("só aceita
-  itens relacionados à profissão *de quem a usa*") também poderia significar
-  um filtro dinâmico pelo dono. Escolhi a fixa por ser mais simples de
-  negociar/vender; se preferir a dinâmica, é uma mudança pequena.
-- **[em aberto]** Mochilas místicas sem ligamento que "perdem o poder ao
-  morrer" (citadas nas notas) ainda não existem — hoje o ligamento é
-  ligado/desligado, sem esse terceiro estado.
+- **Decidido**: a mochila de profissão é **fixa por profissão** (uma de
+  botânico, uma de lenhador...), não um filtro dinâmico pela profissão de
+  quem carrega. É mais simples de negociar/vender e mais fácil de explicar
+  ao jogador. Se um dia quiser a versão dinâmica, é uma mudança pequena.
+- **Resolvido (era engano meu)**: eu tinha anotado como pendência as
+  místicas que "perdem o poder ao morrer". Relendo a fala original do NPC —
+  *"Elas não são dropadas, têm a 'maldição do ligamento', mas... algumas não
+  têm esse poder e acabarão perdendo ela ao morrer"* — isso é exatamente o
+  liga/desliga que já existe: `mistica_simples` (com ligamento, não cai) e
+  `mistica_comum` (sem ligamento, cai). Não há terceiro estado a construir.
 - Arquivos de mochilas cujo item foi destruído (lava, despawn) ficam órfãos
   no disco. Não é bug de correção, só lixo acumulando — dá pra limpar depois
   se incomodar.
@@ -118,5 +131,6 @@ ser conferido por você:
 ## Próximos passos sugeridos
 
 - Testar em servidor de teste com a checklist acima.
-- **Bloco 6**: invocações (o outro módulo grande) ou o reset agendado do
-  mundo de recursos (bem menor, fecha uma pendência do bloco 3).
+- **Bloco 6**: invocações (vitalidade, evolução, skins raras/sazonais,
+  aluguel por 3 dias) — é o maior módulo que sobrou. A alternativa menor é
+  a trava de luz/trevas do mercado negro, que depende da API do WorldGuard.

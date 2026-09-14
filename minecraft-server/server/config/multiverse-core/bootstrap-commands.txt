@@ -16,6 +16,7 @@ mv create recursos_pangeia normal
 mv modify set difficulty hard recursos_pangeia
 mv modify set pvp true recursos_pangeia
 
-# O reset automático agendado AINDA NÃO existe — vira um módulo do
-# PangeiaCore no bloco 5. Por enquanto, reset manual quando necessário:
-# mv regenerate recursos_pangeia -s <seed opcional>
+# O reset automático agendado existe no PangeiaCore (seção
+# reset-mundo-recursos no config.yml dele), mas vem desligado — ele apenas
+# dispara o "mv regen" no horário certo. Reset manual quando necessário:
+# mv regen recursos_pangeia -s

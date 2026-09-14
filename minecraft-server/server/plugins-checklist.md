@@ -64,10 +64,11 @@ GitHub Actions (aba **Actions** → **Build PangeiaCore** → artefato).
 - [x] Mochilas (cargo / profissão / místicas)
 - [x] Maldição do ligamento (item não cai ao morrer)
 - [x] Pergaminhos de teleporte (com tempo de conjuração)
+- [x] Reset agendado do mundo de recursos (vem desligado; ligar só depois
+      de conferir o nome do mundo — a operação apaga tudo e não tem desfazer)
 - [ ] Subir o `.jar` no servidor e rodar a checklist de teste em jogo
 - [ ] Invocações: vitalidade, evolução, skins raras/sazonais, aluguel 3 dias
 - [ ] Trava de item de luz/trevas no mercado negro
-- [ ] Reset agendado do mundo de recursos
 - [ ] Níveis de profissão 0/3/5/7 (gate de receitas por tier — hoje o
       ValhallaMMO já resolve via permissão, só entra aqui se precisarmos de
       regra que ele não cubra)

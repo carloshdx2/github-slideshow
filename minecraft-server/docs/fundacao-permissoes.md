@@ -113,9 +113,10 @@ Dois mundos para começar:
   jogadores andam a pé entre elas.
 - **`recursos_pangeia`** — o mundo de recursos compartilhado (mineradores/
   lenhadores/botânicos), que deve ser **resetado periodicamente** (a
-  referência era ~13 dias). O reset automático ainda não está implementado
-  — vira um módulo do `PangeiaCore` no bloco 5 (apagar + regenerar via
-  tarefa agendada). Por enquanto o mundo só existe, sem reset automático.
+  referência era ~13 dias). O reset automático **já está implementado** no
+  `PangeiaCore` (ver [PangeiaCore](./pangeia-core.md)), mas vem **desligado**
+  na config: regenerar um mundo apaga tudo e não tem desfazer, então ligar é
+  uma decisão consciente sua depois de conferir o nome do mundo.
 
 Ver [server/config/multiverse-core/bootstrap-commands.txt](../server/config/multiverse-core/bootstrap-commands.txt)
 para os comandos de criação.

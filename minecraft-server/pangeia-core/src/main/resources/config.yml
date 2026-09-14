@@ -181,6 +181,22 @@ ligamento:
     - pergaminho_teleporte
   materiais: []
 
+# Renovação periódica do mundo de recursos (o mundo temporário de onde
+# mineradores/lenhadores/botânicos extraem — ver docs/fundacao-permissoes.md).
+#
+# DESLIGADO por padrão de propósito: regenerar um mundo apaga tudo que há nele,
+# e não tem desfazer. Só ligue depois de conferir o nome do mundo.
+# O plugin se recusa a ligar se "mundo" for o mundo principal ou o de saída.
+reset-mundo-recursos:
+  ativado: false
+  mundo: recursos_pangeia
+  # Para onde os jogadores são levados antes da regeneração.
+  mundo-de-saida: world
+  intervalo-dias: 13
+  avisos-minutos: [30, 10, 5, 1]
+  # Quem regenera é o Multiverse; o plugin só dispara o comando no horário.
+  comando-regenerar: 'mv regen %mundo% -s'
+
 pergaminhos:
   # Tempo de conjuração antes do teleporte. Existe de propósito: teleporte
   # instantâneo viraria rota de fuga garantida em PvP.

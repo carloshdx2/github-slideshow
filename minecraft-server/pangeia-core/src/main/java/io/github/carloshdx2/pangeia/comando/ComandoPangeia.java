@@ -41,6 +41,7 @@ public final class ComandoPangeia implements TabExecutor {
                 }
                 darMochila(remetente, argumentos[2], argumentos[3]);
             }
+            case "recursos" -> remetente.sendMessage(ChatColor.GRAY + plugin.servicoResetMundo().status());
             default -> enviarAjuda(remetente);
         }
         return true;
@@ -69,13 +70,14 @@ public final class ComandoPangeia implements TabExecutor {
 
     private void enviarAjuda(CommandSender remetente) {
         remetente.sendMessage(ChatColor.GRAY + "/pangeia mochila dar <jogador> <tipo>");
+        remetente.sendMessage(ChatColor.GRAY + "/pangeia recursos");
         remetente.sendMessage(ChatColor.GRAY + "/pangeia reload");
     }
 
     @Override
     public List<String> onTabComplete(CommandSender remetente, Command comando, String rotulo, String[] argumentos) {
         if (argumentos.length == 1) {
-            return filtrar(List.of("mochila", "reload"), argumentos[0]);
+            return filtrar(List.of("mochila", "recursos", "reload"), argumentos[0]);
         }
         if (argumentos.length == 2 && argumentos[0].equalsIgnoreCase("mochila")) {
             return filtrar(List.of("dar"), argumentos[1]);
