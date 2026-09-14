@@ -54,6 +54,10 @@ ideia em documentos estruturados antes de partir para infraestrutura e plugins.
     **bloco 3**: grupos do LuckPerms por profissão/nível, política de
     locomoção sem `/spawn`, economia via Vault+EssentialsX, mundos no
     Multiverse-Core.
+11. [Itens (Oraxen) e Receitas (ValhallaMMO)](./itens-oraxen-valhalla.md) —
+    **bloco 4**: convenção de ID/tier, catálogo proposto de minérios/
+    pedras de alma/poções, e as primeiras receitas amarradas às
+    permissões de profissão.
 
 ## Status
 

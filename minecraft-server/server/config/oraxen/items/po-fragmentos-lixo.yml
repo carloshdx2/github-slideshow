@@ -1,0 +1,102 @@
+# Pó e Fragmento — Tier LIXO, correspondentes aos minérios de minerios-lixo.yml
+# Ver ../../../docs/itens-oraxen-valhalla.md
+
+po_lixo_ferrobrenho:
+  displayname: '&fPó de Ferrobrenho'
+  material: GUNPOWDER
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 11001
+  lore:
+    - '&7Feito da fusão do minério de Ferrobrenho.'
+
+po_lixo_cobreruneo:
+  displayname: '&6Pó de Cobrerúneo'
+  material: GUNPOWDER
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 11002
+  lore:
+    - '&7Feito da fusão do minério de Cobrerúneo.'
+
+po_lixo_estanhocinza:
+  displayname: '&7Pó de Estanhocinza'
+  material: GUNPOWDER
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 11003
+  lore:
+    - '&7Feito da fusão do minério de Estanhocinza.'
+
+po_lixo_chumbonegro:
+  displayname: '&8Pó de Chumbonegro'
+  material: GUNPOWDER
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 11004
+  lore:
+    - '&7Feito da fusão do minério de Chumbonegro.'
+
+po_lixo_zincopalido:
+  displayname: '&fPó de Zincopálido'
+  material: GUNPOWDER
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 11005
+  lore:
+    - '&7Feito da fusão do minério de Zincopálido.'
+
+fragmento_lixo_ferrobrenho:
+  displayname: '&fFragmento de Ferrobrenho'
+  material: FLINT
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 12001
+  lore:
+    - '&7Resultado de uma falha de forja com Ferrobrenho.'
+
+fragmento_lixo_cobreruneo:
+  displayname: '&6Fragmento de Cobrerúneo'
+  material: FLINT
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 12002
+  lore:
+    - '&7Resultado de uma falha de forja com Cobrerúneo.'
+
+fragmento_lixo_estanhocinza:
+  displayname: '&7Fragmento de Estanhocinza'
+  material: FLINT
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 12003
+  lore:
+    - '&7Resultado de uma falha de forja com Estanhocinza.'
+
+fragmento_lixo_chumbonegro:
+  displayname: '&8Fragmento de Chumbonegro'
+  material: FLINT
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 12004
+  lore:
+    - '&7Resultado de uma falha de forja com Chumbonegro.'
+
+fragmento_lixo_zincopalido:
+  displayname: '&fFragmento de Zincopálido'
+  material: FLINT
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 12005
+  lore:
+    - '&7Resultado de uma falha de forja com Zincopálido.'

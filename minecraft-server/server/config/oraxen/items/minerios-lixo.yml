@@ -1,0 +1,60 @@
+# Minérios — Tier LIXO (5 itens)
+# Convenção de ID e faixa de custom_model_data: ver ../../../docs/itens-oraxen-valhalla.md
+#
+# Nomes são placeholder — troque à vontade, o slug do ID é o que importa
+# pra manter pó/fragmento/receitas amarrados a este item.
+
+minerio_lixo_ferrobrenho:
+  displayname: '&fMinério de Ferrobrenho'
+  material: IRON_INGOT
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 10001
+  lore:
+    - '&7Tier: &fLixo'
+    - '&7Leve e eficaz, pouco durável.'
+
+minerio_lixo_cobreruneo:
+  displayname: '&6Minério de Cobrerúneo'
+  material: COPPER_INGOT
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 10002
+  lore:
+    - '&7Tier: &fLixo'
+    - '&7Leve, propriedades medianas.'
+
+minerio_lixo_estanhocinza:
+  displayname: '&7Minério de Estanhocinza'
+  material: IRON_NUGGET
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 10003
+  lore:
+    - '&7Tier: &fLixo'
+    - '&7Leve, baixa eficácia.'
+
+minerio_lixo_chumbonegro:
+  displayname: '&8Minério de Chumbonegro'
+  material: NETHERITE_SCRAP
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 10004
+  lore:
+    - '&7Tier: &fLixo'
+    - '&7Pesado e durável, pouco eficaz.'
+
+minerio_lixo_zincopalido:
+  displayname: '&fMinério de Zincopálido'
+  material: RAW_IRON
+  Pack:
+    generate_model: true
+    parent_model: item/generated
+    custom_model_data: 10005
+  lore:
+    - '&7Tier: &fLixo'
+    - '&7Equilibrado em tudo.'

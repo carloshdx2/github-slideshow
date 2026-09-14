@@ -41,6 +41,20 @@ oficial linkada — evite mirrors/sites de "download grátis" genéricos.
 - [ ] Testar: jogador novo cai no grupo `default`, sem `/spawn`/`/home`
 - [ ] Testar: `lp user <nome> parent add minerador` dá a profissão
 
+## Configuração pós-instalação (bloco 4)
+
+- [ ] Copiar `config/oraxen/items/*.yml` pra `plugins/Oraxen/items/` e
+      gerar/aplicar o resource pack (`/oraxen pack`)
+- [ ] Copiar `config/valhallammo/recipes/*.yml` pra
+      `plugins/ValhallaMMO/recipes/`
+- [ ] Testar: minerador funde `minerio_lixo_ferrobrenho` em
+      `po_lixo_ferrobrenho` na fornalha
+- [ ] Testar: sem a permissão `pangeia.profissao.ferreiro`, a receita de
+      ferreiro não aparece/não funciona
+- [ ] Validar/trocar os nomes propostos em
+      [docs/itens-oraxen-valhalla.md](../docs/itens-oraxen-valhalla.md)
+      antes de replicar pros outros tiers de minério
+
 ## Plugin próprio (`PangeiaCore`)
 
 Ainda não existe — vai nascer no Bloco 5. Módulos planejados:

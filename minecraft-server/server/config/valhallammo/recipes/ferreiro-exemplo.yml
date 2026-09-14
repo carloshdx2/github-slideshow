@@ -1,0 +1,27 @@
+# Exemplo de receita de crafting avançado: ferreiro usa pó de minério na
+# BIGORNA (não na mesa de trabalho comum) pra criar uma ferramenta básica.
+# Gated pela profissão ferreiro (pangeia.profissao.ferreiro, bloco 3), que
+# por sua vez exige ter evoluído do minerador (ver
+# docs/economia-e-profissoes.md#árvore-de-evolução-de-profissões).
+#
+# Item final ainda não modelado no Oraxen (é só ilustrativo aqui) — quando
+# desenharmos o catálogo de ferramentas/armas, este vira o padrão a seguir.
+#
+# AVISO: confira as chaves exatas contra a versão do ValhallaMMO instalada.
+
+recipes:
+  ferreiro_picareta_ferrobrenho:
+    type: SMITHING
+    permission: pangeia.profissao.ferreiro
+    input:
+      - item: po_lixo_ferrobrenho
+        amount: 3
+      - item: STICK
+        amount: 2
+    output:
+      # placeholder até termos o item final modelado no Oraxen — por ora
+      # usa uma picareta de ferro vanilla renomeada como exemplo de shape
+      item: IRON_PICKAXE
+      amount: 1
+      displayname: '&fPicareta de Ferrobrenho'
+    experience: 15

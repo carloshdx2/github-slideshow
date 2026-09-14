@@ -1,0 +1,69 @@
+# Receitas de fusão: minério -> pó (tier LIXO), na fornalha.
+# Gated pela profissão minerador (pangeia.profissao.minerador, bloco 3).
+#
+# AVISO: confira as chaves exatas contra a versão do ValhallaMMO instalada
+# (o plugin é data-driven mas o nome de algumas chaves pode variar por
+# update) — ver docs/itens-oraxen-valhalla.md#aviso-de-sintaxe.
+# Os IDs de item (minerio_lixo_*, po_lixo_*) vêm de
+# server/config/oraxen/items/minerios-lixo.yml e po-fragmentos-lixo.yml.
+
+recipes:
+  fusao_po_lixo_ferrobrenho:
+    type: FURNACE
+    permission: pangeia.profissao.minerador
+    input:
+      item: minerio_lixo_ferrobrenho
+      amount: 1
+    output:
+      item: po_lixo_ferrobrenho
+      amount: 1
+    cook_time_ticks: 200
+    experience: 5
+
+  fusao_po_lixo_cobreruneo:
+    type: FURNACE
+    permission: pangeia.profissao.minerador
+    input:
+      item: minerio_lixo_cobreruneo
+      amount: 1
+    output:
+      item: po_lixo_cobreruneo
+      amount: 1
+    cook_time_ticks: 200
+    experience: 5
+
+  fusao_po_lixo_estanhocinza:
+    type: FURNACE
+    permission: pangeia.profissao.minerador
+    input:
+      item: minerio_lixo_estanhocinza
+      amount: 1
+    output:
+      item: po_lixo_estanhocinza
+      amount: 1
+    cook_time_ticks: 200
+    experience: 5
+
+  fusao_po_lixo_chumbonegro:
+    type: FURNACE
+    permission: pangeia.profissao.minerador
+    input:
+      item: minerio_lixo_chumbonegro
+      amount: 1
+    output:
+      item: po_lixo_chumbonegro
+      amount: 1
+    cook_time_ticks: 240
+    experience: 6
+
+  fusao_po_lixo_zincopalido:
+    type: FURNACE
+    permission: pangeia.profissao.minerador
+    input:
+      item: minerio_lixo_zincopalido
+      amount: 1
+    output:
+      item: po_lixo_zincopalido
+      amount: 1
+    cook_time_ticks: 200
+    experience: 5
