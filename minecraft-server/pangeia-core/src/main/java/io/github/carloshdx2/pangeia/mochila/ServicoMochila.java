@@ -149,17 +149,22 @@ public final class ServicoMochila {
         return filtro.permite(definicao.profissao(), item);
     }
 
-    public void aoFechar(MochilaAberta mochila) {
+    public void aoFechar(MochilaAberta mochila, HumanEntity quemFechou) {
         if (desligando) {
             return;
         }
         if (mochila.suja()) {
             salvar(mochila, false);
         }
-        // O jogador que está fechando ainda aparece na lista de espectadores aqui.
-        if (mochila.inventario().getViewers().size() <= 1) {
-            abertas.remove(mochila.id());
+        // Comparar espectador por espectador em vez de contar: se o jogador que está
+        // fechando ainda aparece na lista é detalhe de implementação do servidor, e
+        // errar isso descartaria a mochila com outro jogador ainda mexendo nela.
+        for (HumanEntity espectador : mochila.inventario().getViewers()) {
+            if (!espectador.equals(quemFechou)) {
+                return;
+            }
         }
+        abertas.remove(mochila.id());
     }
 
     public void salvarPendentes() {

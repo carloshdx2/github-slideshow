@@ -106,7 +106,7 @@ public final class OuvinteMochila implements Listener {
     @EventHandler
     public void aoFechar(InventoryCloseEvent evento) {
         if (evento.getInventory().getHolder() instanceof SuporteMochila suporte) {
-            servico.aoFechar(suporte.mochila());
+            servico.aoFechar(suporte.mochila(), evento.getPlayer());
         }
     }
 
