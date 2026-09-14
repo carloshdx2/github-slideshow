@@ -14,19 +14,18 @@ fixa: cada profissão já nasce em um nível específico. O nível 0
 
 ```
 default (= aventureiro, nível 0 — todo mundo sempre tem)
- ├─ lenhador    (nível 3)
- ├─ minerador   (nível 3)
- ├─ pescador    (nível 3)
- ├─ botanico    (nível 3)
- ├─ pedreiro    (nível 5)
- ├─ alfaiate    (nível 5)
- ├─ ferreiro    (nível 7)
- ├─ taverneiro  (nível 7)
- ├─ agricultor  (nível 7)
- ├─ joalheiro   (nível 7)
- ├─ escultor    (nível 7)
- ├─ alquimista  (nível 7)
- └─ encantador  (nível 7)
+ ├─ lenhador    (nível 3) ──┬─▶ escultor    (nível 7)
+ │                          └─▶ marceneiro  (nível 5)
+ ├─ minerador   (nível 3) ──┬─▶ ferreiro    (nível 7)
+ │                          └─▶ joalheiro   (nível 7)
+ ├─ pescador    (nível 3) ──┬─▶ taverneiro  (nível 7)
+ │                          └─▶ curtidor    (nível 5)
+ ├─ botanico    (nível 3) ──┬─▶ alquimista  (nível 7)
+ │                          └─▶ tintureiro  (nível 5)
+ ├─ pedreiro    (nível 5, sem pré-requisito)
+ ├─ alfaiate    (nível 5, sem pré-requisito)
+ ├─ agricultor  (nível 7, sem pré-requisito)
+ └─ encantador  (nível 7, sem pré-requisito)
 ```
 
 Cada grupo de profissão carrega duas permissões-tag, usadas depois pelo
@@ -36,12 +35,29 @@ profissão pode fazer:
 - `pangeia.tier.<0|3|5|7>` — nível da profissão.
 - `pangeia.profissao.<nome>` — identifica a profissão em si.
 
-**[em aberto]**: se um jogador pode ter mais de uma profissão ao mesmo
-tempo. Estruturalmente o LuckPerms permite (um usuário pode ter vários
-grupos), mas para começar recomendo **uma profissão ativa por vez**
-(mais simples de balancear a economia) — trocar de profissão seria uma
-ação deliberada (via NPC, por exemplo) que remove o grupo antigo e adiciona
-o novo. Revisitar isso quando formos desenhar a progressão de fato.
+### Árvore de evolução no LuckPerms
+
+Confirmado: **um jogador pode (e deve) ter mais de uma profissão ao mesmo
+tempo** — ver [Economia e Profissões](./economia-e-profissoes.md#árvore-de-evolução-de-profissões)
+para o design completo. Tecnicamente isso é simples no LuckPerms: evoluir
+**não troca de grupo, só adiciona um novo** por cima do que o jogador já
+tem.
+
+```
+lp user <nome> parent add lenhador     # jogador vira lenhador
+# ... depois de cumprir os requisitos de evolução (ver doc de economia) ...
+lp user <nome> parent add escultor     # soma escultor, sem tirar lenhador
+```
+
+O jogador termina com `default` + `lenhador` + `escultor` simultaneamente,
+herdando as permissões dos três. Isso já resolve sozinho a regra de "só
+quem já é experiente no recurso base consegue evoluir" — o `escultor`
+**não** tem `lenhador` como pré-requisito *estrutural* no LuckPerms (não é
+inerência de grupo-pra-grupo); é uma checagem **processual**: antes de
+rodar o `parent add escultor`, confirme que o jogador já tem
+`pangeia.profissao.lenhador` (comando `/lp user <nome> permission check
+pangeia.profissao.lenhador`). Por enquanto isso é manual (staff confere e
+roda o comando); vira um módulo do `PangeiaCore` mais pra frente.
 
 ### Cargos (ranks pagos)
 

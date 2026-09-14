@@ -52,6 +52,20 @@ lp creategroup alfaiate
 lp group alfaiate permission set pangeia.tier.5 true
 lp group alfaiate permission set pangeia.profissao.alfaiate true
 
+# --- Evoluções de nível 5 (requerem a profissão coletora base — ver
+#     docs/economia-e-profissoes.md#árvore-de-evolução-de-profissões) ---
+lp creategroup marceneiro
+lp group marceneiro permission set pangeia.tier.5 true
+lp group marceneiro permission set pangeia.profissao.marceneiro true
+
+lp creategroup tintureiro
+lp group tintureiro permission set pangeia.tier.5 true
+lp group tintureiro permission set pangeia.profissao.tintureiro true
+
+lp creategroup curtidor
+lp group curtidor permission set pangeia.tier.5 true
+lp group curtidor permission set pangeia.profissao.curtidor true
+
 # ============================================================
 # Nível 7 — Profissões de saída
 # ============================================================
@@ -112,3 +126,11 @@ lp group staff permission set essentials.vanish true
 # não faz parte do bootstrap — é só referência)
 # ============================================================
 # lp user <nomeDoJogador> parent add minerador
+#
+# Evolução: SOMA um grupo novo, nunca troca. Antes de rodar, confirme que
+# o jogador já tem a profissão base e cumpriu os requisitos de evolução
+# (ver docs/economia-e-profissoes.md#árvore-de-evolução-de-profissões):
+#
+# lp user <nomeDoJogador> permission check pangeia.profissao.lenhador
+# lp user <nomeDoJogador> parent add escultor
+#   -> jogador fica com lenhador + escultor ao mesmo tempo
