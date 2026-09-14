@@ -59,36 +59,49 @@ pra saber o tier. Simplifica bastante:
 
 ## Minérios, Pó e Fragmentos — proposta de nomes
 
+> **Validado/ajustado nesta revisão** — 4 problemas corrigidos: (1) a
+> tabela antiga contradizia a própria regra do design em alguns itens (ex.:
+> "Estanhocinza" descrito como leve *e* pouco eficaz — a regra diz que leve
+> deveria ser mais eficaz, não menos); (2) "Prafosca" era um erro de
+> concatenação de "Prata" + "fosca" → virou **Pratafosca**; (3)
+> "Mitrilopálido" ficava perto demais de "Mithril" (Tolkien) → virou
+> **Plumalux**; (4) "Niquelrúnico" repetia a raiz "rúneo" já usada em
+> "Cobrerúneo" → virou **Niquelforte**. Troquei a coluna única de
+> trade-off por 3 colunas explícitas (Durabilidade/Peso/Eficácia) pra
+> deixar a progressão de cada tier auditável — cada tier agora sobe de um
+> item "leve e frágil" pra um "pesado e resistente" sem contradição.
+
 Nomes fantasiosos pra Pangeia, seguindo a regra do design ("quanto mais
 durável, menos eficaz e mais pesado"). **São placeholder — renomeie à
 vontade**, o que importa agora é a estrutura (tier, slug, propriedade).
 
-| Tier | Minério | Trade-off sugerido |
-|---|---|---|
-| LIXO | Ferrobrenho | leve, eficaz, pouco durável — o "starter" |
-| LIXO | Cobrerúneo | leve, mediano |
-| LIXO | Estanhocinza | leve, baixa eficácia |
-| LIXO | Chumbonegro | pesado, durável, pouco eficaz |
-| LIXO | Zincopálido | mediano em tudo |
-| COMUM | Bronzita | equilíbrio leve/eficaz |
-| COMUM | Latãovivo | eficaz, mediano peso |
-| COMUM | Prafosca | leve, durabilidade média |
-| COMUM | Niquelrúnico | durável, mediano peso |
-| COMUM | Açocinzento | pesado, muito durável |
-| COMUM | Titâniobruto | eficaz, leve, caro de achar |
-| INCOMUM | Mitrilopálido | muito leve, muito eficaz, pouco durável |
-| INCOMUM | Platinasombria | pesado, altíssima durabilidade |
-| INCOMUM | Orictálcio | equilíbrio alto em tudo |
-| RARO | Adamantinaviva | altíssima eficácia, peso alto |
-| RARO | Estelarita | leve, altíssima eficácia, durabilidade baixa |
-| MUITO RARO | Draconita | topo de eficácia, peso alto |
-| MUITO RARO | Voidferro | topo de durabilidade |
-| MUITO RARO | Auroaço | equilíbrio perfeito — o mais caro/raro de todos |
+| Tier | Minério | Durabilidade | Peso | Eficácia |
+|---|---|---|---|---|
+| LIXO | Ferrobrenho | Baixa | Leve | Alta |
+| LIXO | Cobrerúneo | Baixa-média | Leve | Média-alta |
+| LIXO | Zincopálido | Média | Médio | Média |
+| LIXO | Estanhocinza | Média-alta | Médio-alto | Média-baixa |
+| LIXO | Chumbonegro | Alta | Alto | Baixa |
+| COMUM | Titâniobruto | Muito baixa | Muito leve | Muito alta |
+| COMUM | Bronzita | Baixa | Leve | Alta |
+| COMUM | Latãovivo | Média-baixa | Médio-leve | Média-alta |
+| COMUM | Pratafosca | Média | Médio | Média |
+| COMUM | Niquelforte | Média-alta | Médio-alto | Média-baixa |
+| COMUM | Açocinzento | Alta | Alto | Baixa |
+| INCOMUM | Plumalux | Baixa | Muito leve | Muito alta |
+| INCOMUM | Orictálcio | Média | Médio | Alta |
+| INCOMUM | Platinasombria | Alta | Alto | Média |
+| RARO | Estelarita | Baixa | Leve | Altíssima |
+| RARO | Adamantinaviva | Altíssima | Alto | Alta |
+| MUITO RARO | Voidferro | Altíssima | Médio | Alta |
+| MUITO RARO | Draconita | Alta | Alto | Altíssima |
+| MUITO RARO | Auroaço | Alta | Médio | Alta *(o mais raro/caro dos 19)* |
 
 **Implementado neste bloco** (arquivo real, ver abaixo): os 5 minérios de
-tier LIXO + seus pós e fragmentos, como prova do padrão. Os outros 14
-(COMUM/INCOMUM/RARO/MUITO RARO) seguem o mesmo molde — replico assim que
-você validar os nomes ou trocar por outros.
+tier LIXO + seus pós e fragmentos, como prova do padrão — lore dos itens já
+ajustada pra bater com a tabela corrigida acima. Os outros 14 (COMUM/
+INCOMUM/RARO/MUITO RARO) seguem o mesmo molde — replico assim que você
+validar os nomes ou trocar por outros.
 
 ## Pedras de Alma — proposta por região
 
@@ -100,8 +113,14 @@ purificada cada:
 | Mary Geoise | Pedra de Alma Branca |
 | Brisa Boreal | Pedra de Alma Azul-Vento |
 | Condado das Colinas da Lua | Pedra de Alma Prateada |
-| Governança das Planícies da Desolação | Pedra de Alma Cinza-Desolada |
+| Governança das Planícies da Desolação | Pedra de Alma Ocre-Desolada |
 | Planalto da Colina Cinzenta | Pedra de Alma Cinza-Pedra |
+
+> **Ajustado nesta revisão**: a Planícies da Desolação era "Cinza-Desolada",
+> colidindo em nome com "Cinza-Pedra" do Planalto da Colina Cinzenta (duas
+> regiões diferentes, cor "cinza" repetida — fácil de confundir os drops de
+> uma com a outra). Troquei pra **Ocre** (tom terroso/desértico, reforça a
+> desolação sem repetir a cor de outra região).
 
 **[em aberto]**: a grade original do Notion mostrava bem mais variações do
 que 5 (provavelmente uma pedra por *criatura*, não só por região — várias
@@ -169,8 +188,13 @@ antes de subir em produção (às vezes uma chave muda de nome entre updates).
 
 ## Próximos blocos sugeridos
 
-- Validar/ajustar os nomes propostos acima (minérios, pedras, poções).
+- ~~Validar/ajustar os nomes propostos acima~~ — feito nesta revisão (ver
+  avisos "Validado/ajustado" nas seções de minérios e pedras de alma).
+  Poções não precisaram de ajuste (6 tiers já batiam com as notas
+  originais, LIXO→LENDÁRIO).
 - **Bloco 5**: `PangeiaCore` — comece pelas mochilas, e inclua o listener
   do pergaminho de teleporte já modelado aqui.
 - Quando o bloco 5 definir as masmorras/criaturas, voltamos aqui pra
   nomear chaves e pedras de alma extras.
+- Replicar o molde de minérios/pó/fragmento pros 14 itens restantes
+  (COMUM/INCOMUM/RARO/MUITO RARO) agora que a tabela está validada.

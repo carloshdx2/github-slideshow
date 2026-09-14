@@ -24,7 +24,7 @@ minerio_lixo_cobreruneo:
     custom_model_data: 10002
   lore:
     - '&7Tier: &fLixo'
-    - '&7Leve, propriedades medianas.'
+    - '&7Leve, boa eficácia, durabilidade baixa-média.'
 
 minerio_lixo_estanhocinza:
   displayname: '&7Minério de Estanhocinza'
@@ -35,11 +35,11 @@ minerio_lixo_estanhocinza:
     custom_model_data: 10003
   lore:
     - '&7Tier: &fLixo'
-    - '&7Leve, baixa eficácia.'
+    - '&7Peso médio-alto, eficácia média-baixa.'
 
 minerio_lixo_chumbonegro:
   displayname: '&8Minério de Chumbonegro'
-  material: NETHERITE_SCRAP
+  material: COAL
   Pack:
     generate_model: true
     parent_model: item/generated
