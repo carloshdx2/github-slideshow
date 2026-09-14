@@ -1,0 +1,21 @@
+# Bootstrap de mundos — Multiverse-Core
+#
+# Execute em ordem no console (ou via RCON), depois que o Multiverse-Core
+# já tiver bootado pelo menos uma vez.
+# Contexto/decisões: ver ../../../docs/fundacao-permissoes.md
+
+# Mundo principal — continente de Pangeia (permanente).
+# Se "world" já existe do primeiro boot do Paper, importe em vez de criar:
+mv import world normal
+# Caso prefira começar do zero em vez de importar o world gerado:
+# mv create world normal
+
+# Mundo de recursos — compartilhado entre mineradores/lenhadores/botânicos,
+# pensado pra ser resetado periodicamente (referência: ~13 dias).
+mv create recursos_pangeia normal
+mv modify set difficulty hard recursos_pangeia
+mv modify set pvp true recursos_pangeia
+
+# O reset automático agendado AINDA NÃO existe — vira um módulo do
+# PangeiaCore no bloco 5. Por enquanto, reset manual quando necessário:
+# mv regenerate recursos_pangeia -s <seed opcional>

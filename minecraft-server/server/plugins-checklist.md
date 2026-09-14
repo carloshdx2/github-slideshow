@@ -32,6 +32,15 @@ oficial linkada — evite mirrors/sites de "download grátis" genéricos.
 - [ ] **WorldGuard** + **WorldEdit** — https://enginehub.org/worldguard
 - [ ] **Tebex** (webstore, criar conta e vincular ao servidor) — https://www.tebex.io/
 
+## Configuração pós-instalação (bloco 3)
+
+- [ ] Rodar `config/luckperms/bootstrap-commands.txt` no console
+- [ ] Rodar `config/multiverse-core/bootstrap-commands.txt` no console
+- [ ] Mesclar `config/essentialsx/config-overrides.yml` no `config.yml` do
+      EssentialsX
+- [ ] Testar: jogador novo cai no grupo `default`, sem `/spawn`/`/home`
+- [ ] Testar: `lp user <nome> parent add minerador` dá a profissão
+
 ## Plugin próprio (`PangeiaCore`)
 
 Ainda não existe — vai nascer no Bloco 5. Módulos planejados:

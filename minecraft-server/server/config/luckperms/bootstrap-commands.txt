@@ -1,0 +1,114 @@
+# Bootstrap de grupos/permissões — LuckPerms
+#
+# Execute estes comandos EM ORDEM no console do servidor (ou via RCON),
+# depois que o LuckPerms já tiver bootado pelo menos uma vez.
+# Cada linha é um comando "/lp ...". Não copie os comentários (#).
+#
+# Contexto/decisões: ver ../../../docs/fundacao-permissoes.md
+
+# ============================================================
+# Nível 0 — Aventureiro (base permanente de todo reencarnado)
+# ============================================================
+lp group default permission set pangeia.tier.0 true
+lp group default permission set pangeia.profissao.aventureiro true
+
+# Política de locomoção: sem /spawn, /home, /warp, /tpa, /back por padrão
+lp group default permission set essentials.spawn false
+lp group default permission set essentials.home false
+lp group default permission set essentials.sethome false
+lp group default permission set essentials.warp false
+lp group default permission set essentials.tpa false
+lp group default permission set essentials.tpahere false
+lp group default permission set essentials.tpaccept false
+lp group default permission set essentials.back false
+
+# ============================================================
+# Nível 3 — Coleta de recursos
+# ============================================================
+lp creategroup lenhador
+lp group lenhador permission set pangeia.tier.3 true
+lp group lenhador permission set pangeia.profissao.lenhador true
+
+lp creategroup minerador
+lp group minerador permission set pangeia.tier.3 true
+lp group minerador permission set pangeia.profissao.minerador true
+
+lp creategroup pescador
+lp group pescador permission set pangeia.tier.3 true
+lp group pescador permission set pangeia.profissao.pescador true
+
+lp creategroup botanico
+lp group botanico permission set pangeia.tier.3 true
+lp group botanico permission set pangeia.profissao.botanico true
+
+# ============================================================
+# Nível 5 — Construção / serviços especiais
+# ============================================================
+lp creategroup pedreiro
+lp group pedreiro permission set pangeia.tier.5 true
+lp group pedreiro permission set pangeia.profissao.pedreiro true
+
+lp creategroup alfaiate
+lp group alfaiate permission set pangeia.tier.5 true
+lp group alfaiate permission set pangeia.profissao.alfaiate true
+
+# ============================================================
+# Nível 7 — Profissões de saída
+# ============================================================
+lp creategroup ferreiro
+lp group ferreiro permission set pangeia.tier.7 true
+lp group ferreiro permission set pangeia.profissao.ferreiro true
+
+lp creategroup taverneiro
+lp group taverneiro permission set pangeia.tier.7 true
+lp group taverneiro permission set pangeia.profissao.taverneiro true
+
+lp creategroup agricultor
+lp group agricultor permission set pangeia.tier.7 true
+lp group agricultor permission set pangeia.profissao.agricultor true
+
+lp creategroup joalheiro
+lp group joalheiro permission set pangeia.tier.7 true
+lp group joalheiro permission set pangeia.profissao.joalheiro true
+
+lp creategroup escultor
+lp group escultor permission set pangeia.tier.7 true
+lp group escultor permission set pangeia.profissao.escultor true
+
+lp creategroup alquimista
+lp group alquimista permission set pangeia.tier.7 true
+lp group alquimista permission set pangeia.profissao.alquimista true
+
+lp creategroup encantador
+lp group encantador permission set pangeia.tier.7 true
+lp group encantador permission set pangeia.profissao.encantador true
+
+# ============================================================
+# Cargos (ranks pagos) — exemplo, repita o padrão pros demais
+# ============================================================
+lp creategroup cargo-aurora
+lp group cargo-aurora permission set pangeia.cargo.aurora true
+
+# ============================================================
+# Staff — libera de volta os comandos de locomoção pra moderação/admin
+# ============================================================
+lp creategroup staff
+lp group staff parent add default
+lp group staff permission set essentials.spawn true
+lp group staff permission set essentials.home true
+lp group staff permission set essentials.sethome true
+lp group staff permission set essentials.warp true
+lp group staff permission set essentials.tpa true
+lp group staff permission set essentials.tpahere true
+lp group staff permission set essentials.tpaccept true
+lp group staff permission set essentials.back true
+lp group staff permission set essentials.kick true
+lp group staff permission set essentials.ban true
+lp group staff permission set essentials.mute true
+lp group staff permission set essentials.vanish true
+
+# ============================================================
+# Exemplo de como atribuir profissão a um jogador (rodar manualmente,
+# não faz parte do bootstrap — é só referência)
+# ============================================================
+# lp user <nomeDoJogador> parent add minerador

@@ -20,6 +20,13 @@ de stack e o motivo de cada escolha.
    (`server/config/<plugin>/`) para a pasta correspondente em
    `plugins/<Plugin>/` no servidor, sobrescrevendo os arquivos padrão gerados
    no primeiro boot.
+   - **LuckPerms** e **Multiverse-Core**: não é pra copiar arquivo — rode os
+     comandos de `bootstrap-commands.txt` de cada pasta, em ordem, no
+     console/RCON depois do primeiro boot (ver
+     [../docs/fundacao-permissoes.md](../docs/fundacao-permissoes.md)).
+   - **EssentialsX**: mescle as chaves de `config-overrides.yml` no
+     `config.yml` real gerado pelo plugin (não substitua o arquivo
+     inteiro).
 4. **Copie `server.properties`** (ajustando `server-ip`/`motd` se o host
    pedir) para a raiz do servidor.
 5. Reinicie o servidor pelo painel.

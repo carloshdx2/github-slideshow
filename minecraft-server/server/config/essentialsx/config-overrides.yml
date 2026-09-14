@@ -1,0 +1,19 @@
+# Chaves a mesclar no config.yml gerado pelo EssentialsX após o primeiro
+# boot — NÃO substitua o arquivo inteiro (o config.yml real do Essentials
+# tem centenas de linhas com muita coisa que já vem boa por padrão).
+#
+# A restrição de comandos de teleporte (/spawn, /home, /warp, /tpa, /back)
+# é feita via LuckPerms (ver ../luckperms/bootstrap-commands.txt), não
+# aqui — então não precisa mexer em "disabled-commands".
+
+currency-symbol: 'K'
+starting-balance: 0
+economy-log-enabled: true
+
+# Evita que economia negativa quebre transações entre profissões
+min-money: 0
+
+# Nomes de comando ficam em português nas mensagens do bot? Não —
+# EssentialsX não tem localização granular fácil por comando; mantemos
+# inglês nos comandos (/pay, /balance) e cuidamos da comunicação em
+# português via MOTD/regras/anúncios.

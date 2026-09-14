@@ -50,6 +50,10 @@ ideia em documentos estruturados antes de partir para infraestrutura e plugins.
 9. [Infraestrutura Técnica](./infraestrutura.md) — **bloco 2**: server
    software, stack de plugins gratuitos, o que precisa de plugin próprio, e
    estrutura de deploy no host gerenciado.
+10. [Fundação: Permissões, Economia e Mundos](./fundacao-permissoes.md) —
+    **bloco 3**: grupos do LuckPerms por profissão/nível, política de
+    locomoção sem `/spawn`, economia via Vault+EssentialsX, mundos no
+    Multiverse-Core.
 
 ## Status
 
