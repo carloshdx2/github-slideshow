@@ -2,3 +2,11 @@ _site/
 .sass-cache/
 .jekyll-metadata
 .bundle
+
+# Minecraft server — instância local/de teste (binários e save de mundo,
+# nunca versionados; só a configuração em minecraft-server/server/config/ vai pro git)
+minecraft-server/server/instance/
+minecraft-server/server/**/*.jar
+minecraft-server/server/**/world*/
+minecraft-server/server/**/logs/
+minecraft-server/server/**/cache/

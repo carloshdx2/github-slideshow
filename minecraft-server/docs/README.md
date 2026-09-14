@@ -47,6 +47,9 @@ ideia em documentos estruturados antes de partir para infraestrutura e plugins.
 7. [Dungeons e Chaves](./dungeons-e-masmorras.md) — masmorras, chaves e drops.
 8. [Ideias Adicionais](./ideias-adicionais.md) — baús interligados, itens de
    luz/trevas, mercado negro, e outras notas soltas.
+9. [Infraestrutura Técnica](./infraestrutura.md) — **bloco 2**: server
+   software, stack de plugins gratuitos, o que precisa de plugin próprio, e
+   estrutura de deploy no host gerenciado.
 
 ## Status
 
