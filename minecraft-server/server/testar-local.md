@@ -100,6 +100,20 @@ Ver [plugins-checklist.md](./plugins-checklist.md) para a instalação e
 [docs/itens-oraxen-valhalla.md](../docs/itens-oraxen-valhalla.md) para os
 itens.
 
+## Pegadinha: "Comando desconhecido"
+
+Se `/pangeia` responder **"Comando desconhecido"**, quase sempre é **falta de
+permissão**, não comando inexistente: o Paper esconde do jogador os comandos
+que ele não pode usar e responde "desconhecido" em vez de "sem permissão".
+
+Confira com `op SeuNickDeVerdade` no console (o nick real, escrito igual ao
+do jogo) e **reconecte** — o cliente só recebe a lista atualizada de comandos
+ao entrar de novo.
+
+Vale lembrar disso quando for liberar o comando para moderadores no servidor
+de verdade: quem não tiver `pangeia.admin` vai ver "comando desconhecido" e
+achar que o plugin está quebrado.
+
 ## Se algo der errado
 
 Copie o trecho do console com o erro (procure por `ERROR` ou por
