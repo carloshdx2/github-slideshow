@@ -1,5 +1,8 @@
 # Deploy — Servidor Pangeia (host gerenciado)
 
+> Antes de subir qualquer coisa no host, vale testar no seu PC:
+> ver [testar-local.md](./testar-local.md).
+
 Este projeto roda num **host gerenciado de Minecraft** (Shockbyte, Pebblehost,
 Apex ou similar), então não usamos Docker — o deploy é feito subindo
 arquivos pelo painel do host (ou via FTP/SFTP quando o host oferecer).
