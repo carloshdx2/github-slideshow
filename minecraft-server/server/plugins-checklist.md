@@ -66,7 +66,11 @@ GitHub Actions (aba **Actions** → **Build PangeiaCore** → artefato).
 - [x] Pergaminhos de teleporte (com tempo de conjuração)
 - [x] Reset agendado do mundo de recursos (vem desligado; ligar só depois
       de conferir o nome do mundo — a operação apaga tudo e não tem desfazer)
-- [ ] Subir o `.jar` no servidor e rodar a checklist de teste em jogo
+- [x] Testado em servidor local: mochilas, filtro de profissão, ligamento e
+      persistência após restart passaram (ver
+      [docs/pangeia-core.md](../docs/pangeia-core.md#checklist-de-teste-em-jogo))
+- [ ] Testar a trava por cargo (precisa do LuckPerms instalado)
+- [ ] Testar o pergaminho de teleporte (precisa do Oraxen instalado)
 - [ ] Invocações: vitalidade, evolução, skins raras/sazonais, aluguel 3 dias
 - [ ] Trava de item de luz/trevas no mercado negro
 - [ ] Níveis de profissão 0/3/5/7 (gate de receitas por tier — hoje o

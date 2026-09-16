@@ -89,25 +89,33 @@ qualquer 1.20.x. Se compilássemos contra a 1.20.6, quebraria em servidores
 
 ## Checklist de teste em jogo
 
-Ainda **não testei nada disso em servidor rodando** — não tenho um
-Minecraft aqui. A compilação é verificada pelo CI; o comportamento precisa
-ser conferido por você:
+### Validado em servidor local (Paper 1.20.1, 16/09/2026)
 
-- [ ] `/pangeia mochila dar <voce> mistica_simples` entrega a mochila
-- [ ] Clique direito abre (com o atraso configurado)
-- [ ] Clicar num baú segurando a mochila abre o **baú**, não a mochila
+Rodado em servidor real, sem nenhum outro plugin instalado:
+
+- [x] `/pangeia mochila dar <voce> mistica_simples` entrega a mochila
+- [x] Clique direito abre (com o atraso configurado)
+- [x] Clicar num baú segurando a mochila abre o **baú**, não a mochila
       (segurar shift força a mochila)
-- [ ] Guardar item, fechar, reabrir — o conteúdo continua lá
-- [ ] Reiniciar o servidor e reabrir — o conteúdo continua lá
-- [ ] Tentar colocar uma mochila dentro de outra → bloqueado
-- [ ] Na mochila de botânico, tentar guardar uma picareta → bloqueado
-      (testar também com shift-click, tecla numérica e arrastando)
-- [ ] Morrer com a `mistica_simples` (ligamento) → a mochila **não** cai
-- [ ] Morrer com a `mistica_comum` → a mochila **cai** normalmente
-- [ ] Sem o cargo, tentar abrir a `cargo_aurora` → recusa
+- [x] Guardar item, fechar, reabrir — o conteúdo continua lá
+- [x] Reiniciar o servidor e reabrir — o conteúdo continua lá
+- [x] Tentar colocar uma mochila dentro de outra → bloqueado
+- [x] Na mochila de profissão, tentar guardar item de outra profissão →
+      bloqueado nas 5 formas (clique, shift-click, tecla numérica,
+      off-hand e arrastando)
+- [x] Mover ou soltar a mochila enquanto ela está aberta → bloqueado
+- [x] Morrer com a `mistica_simples` (ligamento) → a mochila **não** cai
+- [x] Morrer com a `mistica_comum` → a mochila **cai** normalmente
+- [x] `/pangeia recursos` responde
+
+### Ainda não validado (depende de outros plugins)
+
+- [ ] Sem o cargo, tentar abrir a `cargo_aurora` → recusa — **precisa do
+      LuckPerms**
 - [ ] Com `lp user <voce> parent add cargo-aurora`, abre
-- [ ] Pergaminho: levar dano durante a leitura cancela o teleporte
-- [ ] `/pangeia recursos` mostra quanto falta para o próximo reset
+- [ ] Pergaminho de teleporte — **precisa do Oraxen**, porque o plugin
+      identifica o pergaminho pelo ID do Oraxen gravado no item. Sem ele
+      não existe item que dispare o efeito
 - [ ] Com `reset-mundo-recursos.ativado: true` e um `intervalo-dias` curto
       só para teste, conferir que os avisos chegam e que o mundo regenera
       (teste isso num mundo descartável, nunca no principal)
