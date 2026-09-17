@@ -13,11 +13,13 @@ public final class PangeiaChaves {
     public final NamespacedKey mochilaId;
     public final NamespacedKey mochilaTipo;
     public final NamespacedKey ligamento;
+    public final NamespacedKey pergaminhoTipo;
 
     public PangeiaChaves(Plugin plugin) {
         this.mochilaId = new NamespacedKey(plugin, "mochila_id");
         this.mochilaTipo = new NamespacedKey(plugin, "mochila_tipo");
         this.ligamento = new NamespacedKey(plugin, "ligamento");
+        this.pergaminhoTipo = new NamespacedKey(plugin, "pergaminho_tipo");
     }
 
     public static String lerOraxenId(ItemStack item) {

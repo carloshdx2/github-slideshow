@@ -49,6 +49,14 @@ public final class ServicoLigamento {
         if (oraxenId != null && oraxenIds.contains(oraxenId.toLowerCase(Locale.ROOT))) {
             return true;
         }
+        // Pergaminhos dados por /pangeia pergaminho dar carregam a tag própria do
+        // PangeiaCore, não a do Oraxen — mesma lista de IDs cobre os dois casos.
+        String tipoPergaminho = item.hasItemMeta()
+                ? item.getItemMeta().getPersistentDataContainer().get(chaves.pergaminhoTipo, PersistentDataType.STRING)
+                : null;
+        if (tipoPergaminho != null && oraxenIds.contains(tipoPergaminho.toLowerCase(Locale.ROOT))) {
+            return true;
+        }
         return materiais.contains(item.getType());
     }
 }

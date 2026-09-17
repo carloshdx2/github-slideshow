@@ -1,7 +1,8 @@
 package io.github.carloshdx2.pangeia.pergaminho;
 
-import io.github.carloshdx2.pangeia.PangeiaChaves;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
@@ -18,13 +19,32 @@ import org.bukkit.scheduler.BukkitTask;
 public final class ServicoPergaminho {
 
     private final Plugin plugin;
+    private final ItensPergaminho itens;
     private final Map<String, Destino> destinos = new HashMap<>();
     private final Map<UUID, BukkitTask> conjuracoes = new HashMap<>();
+    private Map<String, DefinicaoPergaminho> definicoes = new HashMap<>();
     private int tempoConjuracaoTicks = 60;
     private boolean cancelarAoTomarDano = true;
 
-    public ServicoPergaminho(Plugin plugin) {
+    public ServicoPergaminho(Plugin plugin, ItensPergaminho itens) {
         this.plugin = plugin;
+        this.itens = itens;
+    }
+
+    public void definirDefinicoes(Map<String, DefinicaoPergaminho> definicoes) {
+        this.definicoes = definicoes;
+    }
+
+    public DefinicaoPergaminho definicao(String tipo) {
+        return tipo == null ? null : definicoes.get(tipo);
+    }
+
+    public List<String> tipos() {
+        return new ArrayList<>(definicoes.keySet());
+    }
+
+    public ItensPergaminho itens() {
+        return itens;
     }
 
     public void carregar(ConfigurationSection secao) {
@@ -39,12 +59,12 @@ public final class ServicoPergaminho {
         if (lista == null) {
             return;
         }
-        for (String oraxenId : lista.getKeys(false)) {
-            ConfigurationSection destino = lista.getConfigurationSection(oraxenId);
+        for (String id : lista.getKeys(false)) {
+            ConfigurationSection destino = lista.getConfigurationSection(id);
             if (destino == null) {
                 continue;
             }
-            destinos.put(oraxenId.toLowerCase(Locale.ROOT), new Destino(
+            destinos.put(id.toLowerCase(Locale.ROOT), new Destino(
                     destino.getString("mundo", "world"),
                     destino.getDouble("x"),
                     destino.getDouble("y"),
@@ -59,8 +79,8 @@ public final class ServicoPergaminho {
     }
 
     public Destino destinoDe(ItemStack item) {
-        String oraxenId = PangeiaChaves.lerOraxenId(item);
-        return oraxenId == null ? null : destinos.get(oraxenId.toLowerCase(Locale.ROOT));
+        String id = itens.lerTipo(item);
+        return id == null ? null : destinos.get(id.toLowerCase(Locale.ROOT));
     }
 
     public void usar(Player jogador, ItemStack pergaminho) {
@@ -68,17 +88,17 @@ public final class ServicoPergaminho {
         if (destino == null || conjuracoes.containsKey(jogador.getUniqueId())) {
             return;
         }
-        String oraxenId = PangeiaChaves.lerOraxenId(pergaminho);
+        String id = itens.lerTipo(pergaminho);
 
         if (tempoConjuracaoTicks <= 0) {
-            concluir(jogador, oraxenId, destino);
+            concluir(jogador, id, destino);
             return;
         }
         jogador.sendMessage(ChatColor.GRAY + "Lendo o pergaminho... fique parado e sem levar dano.");
         BukkitTask tarefa = Bukkit.getScheduler().runTaskLater(plugin, () -> {
             conjuracoes.remove(jogador.getUniqueId());
             if (jogador.isOnline()) {
-                concluir(jogador, oraxenId, destino);
+                concluir(jogador, id, destino);
             }
         }, tempoConjuracaoTicks);
         conjuracoes.put(jogador.getUniqueId(), tarefa);
@@ -100,16 +120,16 @@ public final class ServicoPergaminho {
         conjuracoes.clear();
     }
 
-    private void concluir(Player jogador, String oraxenId, Destino destino) {
+    private void concluir(Player jogador, String id, Destino destino) {
         ItemStack naMao = jogador.getInventory().getItemInMainHand();
-        if (oraxenId == null || !oraxenId.equalsIgnoreCase(PangeiaChaves.lerOraxenId(naMao))) {
+        if (id == null || !id.equalsIgnoreCase(itens.lerTipo(naMao))) {
             jogador.sendMessage(ChatColor.RED + "Você precisa continuar segurando o pergaminho até o fim.");
             return;
         }
         World mundo = Bukkit.getWorld(destino.mundo());
         if (mundo == null) {
             jogador.sendMessage(ChatColor.RED + "O destino desse pergaminho não existe mais.");
-            plugin.getLogger().warning("Pergaminho " + oraxenId + " aponta para o mundo inexistente "
+            plugin.getLogger().warning("Pergaminho " + id + " aponta para o mundo inexistente "
                     + destino.mundo() + ".");
             return;
         }

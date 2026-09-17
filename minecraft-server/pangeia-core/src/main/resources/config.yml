@@ -203,6 +203,21 @@ pergaminhos:
   tempo-conjuracao-ticks: 60
   # O dano sofrido durante a conjuração cancela o teleporte.
   cancelar-ao-tomar-dano: true
+
+  # Item de verdade do PangeiaCore — não depende de nenhum plugin de itens
+  # customizados (Oraxen virou pago; ver docs/itens-oraxen-valhalla.md).
+  # A "textura" por enquanto é o material vanilla puro; quando houver um
+  # resource pack pronto, troque o material/custom-model-data aqui.
+  tipos:
+    pergaminho_teleporte:
+      nome: '&bPergaminho de Teleporte'
+      material: PAPER
+      custom-model-data: 16001
+      lore:
+        - '&7Clique com o botão direito para'
+        - '&7se teleportar ao destino gravado.'
+        - '&7Item consumido no uso.'
+
   destinos:
     pergaminho_teleporte:
       mundo: world

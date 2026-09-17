@@ -4,6 +4,15 @@ Como modelar os itens customizados do Oraxen e as receitas do ValhallaMMO,
 amarrados nas permissões de profissão/nível criadas no
 [bloco 3](./fundacao-permissoes.md).
 
+> **Decisão (bloco 5)**: o Oraxen ficou pago depois que este documento foi
+> escrito, e a decisão foi seguir **sem** ele — itens customizados viram
+> nativos do `PangeiaCore` (como o pergaminho de teleporte já é, ver
+> [docs/pangeia-core.md](./pangeia-core.md)), não itens do Oraxen. A
+> convenção de ID/`custom_model_data` abaixo continua valendo (é
+> agnóstica de plugin); os arquivos `server/config/oraxen/items/*.yml`
+> deste bloco viraram referência histórica — o catálogo de minérios/pó/
+> pedras de alma/poções ainda não foi migrado pro formato nativo.
+
 ## Convenção de ID (Oraxen)
 
 `<categoria>_<tier ou região>_<slug>`, tudo em minúsculas com `_`:

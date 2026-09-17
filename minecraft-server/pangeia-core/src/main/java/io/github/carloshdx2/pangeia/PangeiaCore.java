@@ -10,6 +10,8 @@ import io.github.carloshdx2.pangeia.mochila.ItensMochila;
 import io.github.carloshdx2.pangeia.mochila.OuvinteMochila;
 import io.github.carloshdx2.pangeia.mochila.ServicoMochila;
 import io.github.carloshdx2.pangeia.mundo.ServicoResetMundo;
+import io.github.carloshdx2.pangeia.pergaminho.DefinicaoPergaminho;
+import io.github.carloshdx2.pangeia.pergaminho.ItensPergaminho;
 import io.github.carloshdx2.pangeia.pergaminho.OuvintePergaminho;
 import io.github.carloshdx2.pangeia.pergaminho.ServicoPergaminho;
 import java.util.LinkedHashMap;
@@ -37,7 +39,7 @@ public final class PangeiaCore extends JavaPlugin {
         filtroProfissao = new FiltroProfissao();
         servicoMochila = new ServicoMochila(this, new ArmazenamentoMochila(this), itens, filtroProfissao);
         servicoLigamento = new ServicoLigamento(chaves);
-        servicoPergaminho = new ServicoPergaminho(this);
+        servicoPergaminho = new ServicoPergaminho(this, new ItensPergaminho(chaves));
         servicoResetMundo = new ServicoResetMundo(this);
 
         aplicarConfiguracao();
@@ -81,6 +83,7 @@ public final class PangeiaCore extends JavaPlugin {
         servicoMochila.definirDefinicoes(carregarDefinicoes());
         servicoLigamento.carregar(getConfig().getConfigurationSection("ligamento"));
         servicoPergaminho.carregar(getConfig().getConfigurationSection("pergaminhos"));
+        servicoPergaminho.definirDefinicoes(carregarDefinicoesPergaminho());
         servicoResetMundo.carregar(getConfig().getConfigurationSection("reset-mundo-recursos"));
         reagendarAutosave();
     }
@@ -133,8 +136,44 @@ public final class PangeiaCore extends JavaPlugin {
         return definicoes;
     }
 
+    private Map<String, DefinicaoPergaminho> carregarDefinicoesPergaminho() {
+        Map<String, DefinicaoPergaminho> definicoes = new LinkedHashMap<>();
+        ConfigurationSection tipos = getConfig().getConfigurationSection("pergaminhos.tipos");
+        if (tipos == null) {
+            return definicoes;
+        }
+
+        for (String id : tipos.getKeys(false)) {
+            ConfigurationSection secao = tipos.getConfigurationSection(id);
+            if (secao == null) {
+                continue;
+            }
+            String nomeMaterial = secao.getString("material", "PAPER");
+            Material material = Material.matchMaterial(nomeMaterial);
+            if (material == null) {
+                getLogger().warning("Pergaminho " + id + " ignorado: material desconhecido " + nomeMaterial + ".");
+                continue;
+            }
+            Integer customModelData = secao.contains("custom-model-data")
+                    ? secao.getInt("custom-model-data")
+                    : null;
+
+            definicoes.put(id, new DefinicaoPergaminho(
+                    id,
+                    secao.getString("nome", id),
+                    material,
+                    customModelData,
+                    secao.getStringList("lore")));
+        }
+        return definicoes;
+    }
+
     public ServicoMochila servicoMochila() {
         return servicoMochila;
+    }
+
+    public ServicoPergaminho servicoPergaminho() {
+        return servicoPergaminho;
     }
 
     public ServicoResetMundo servicoResetMundo() {

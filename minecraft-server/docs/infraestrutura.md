@@ -24,7 +24,7 @@ builds piratas desatualizadas e instáveis — evitamos por completo).
 | Economia (API) | **Vault** | Sim | Ponte entre plugins de economia e o "K" (moeda interna) |
 | Comandos essenciais | **EssentialsX** | Sim, open source | Comandos básicos — **sem** usar `/spawn`/`/warp` livre, já que o design não tem spawn fixo |
 | Múltiplos mundos | **Multiverse-Core** | Sim | Vilarejos como mundos/regiões separados; mundo de recursos que reseta periodicamente |
-| Itens e receitas customizadas | **Oraxen** | Sim, 100% open source | Minérios/pó/fragmentos por tier, pedras de alma, poções, chaves, pergaminhos — texturas e itens próprios do servidor |
+| Itens e receitas customizadas | **Oraxen** | **Não** — ficou pago (licença via SpigotMC/BuiltByBit), mudou desde que isso foi pesquisado aqui | Minérios/pó/fragmentos por tier, pedras de alma, poções, chaves, pergaminhos — texturas e itens próprios do servidor. O pergaminho de teleporte já foi migrado pra item nativo do `PangeiaCore` (sem Oraxen); o resto do catálogo segue em aberto — ver [docs/pangeia-core.md](./pangeia-core.md#detalhes-que-valem-saber) |
 | Profissões / progressão / bancadas | **ValhallaMMO** | Sim (núcleo grátis) | Sistema de receitas por bancada própria (ferreiro na bigorna, etc — é literalmente o plugin citado nas suas notas como "baseado no Valhalla"), skills que sobem de nível |
 | Classes/raças (addon do Valhalla) | **ValhallaRaces** | Verificar licença antes de instalar | Pode mapear para os níveis de profissão — avaliar no bloco 3 |
 | Mobs e chefes de dungeon | **MythicMobs (versão free)** | Sim | Criaturas customizadas por região, drops de pedra de alma |
@@ -36,8 +36,9 @@ builds piratas desatualizadas e instáveis — evitamos por completo).
 
 Baseado na pesquisa, essas mecânicas do seu design não têm um plugin gratuito
 maduro que cubra exatamente o que foi descrito. Para essas, o caminho é
-plugin Java customizado (podendo usar a API do Oraxen/ValhallaMMO/MythicMobs
-como base, sem reinventar a roda toda):
+plugin Java customizado (podendo usar a API do ValhallaMMO/MythicMobs como
+base, sem reinventar a roda toda — o Oraxen ficou pago e foi tirado dessa
+lista, ver item 5 abaixo):
 
 1. **Mochilas de cargo e de profissão com restrição de item** — os plugins
    de backpack gratuitos (Minepacks, UltimateBackpack) não têm o conceito de
@@ -48,15 +49,18 @@ como base, sem reinventar a roda toda):
    construção/especial, 7 = saída" com bloqueio de receita por tier é
    customizada.
 3. **"Maldição do ligamento"** (item não cai ao morrer) — dá pra fazer com
-   NBT tag customizada (via Oraxen) + um listener de morte próprio.
+   NBT tag customizada própria do `PangeiaCore` + um listener de morte
+   próprio. Não depende do Oraxen.
 4. **Invocações (elementais/montarias) com vitalidade, evolução e skins
    raras/limitadas/sazonais, aluguel por 3 dias** — não achei um plugin
    gratuito maduro e confiável que cubra tudo isso junto sem risco de ser
    build pirata. Melhor construir por cima do **MythicMobs free** (que já
    suporta montaria/disguise de graça) com uma camada própria pra
    vitalidade/skins/aluguel.
-5. **Pergaminhos de teleporte** — item consumível com cooldown, simples de
-   fazer: Oraxen pro item + plugin próprio pequeno pro efeito de teleporte.
+5. **Pergaminhos de teleporte** — item consumível com cooldown. **Feito**
+   (bloco 5): item nativo do `PangeiaCore` + listener próprio pro efeito de
+   teleporte, sem Oraxen — decisão confirmada de seguir sem o plugin (ficou
+   pago), fazendo os itens customizados na mão daqui pra frente.
 6. **Mercado negro de itens de luz/trevas** — WorldGuard cuida da região,
    mas a trava "esse item só pode ser vendido/usado dentro dessa região"
    precisa de um listener próprio checando a tag do item.

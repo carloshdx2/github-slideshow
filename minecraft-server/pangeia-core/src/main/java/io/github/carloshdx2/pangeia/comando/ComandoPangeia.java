@@ -2,6 +2,7 @@ package io.github.carloshdx2.pangeia.comando;
 
 import io.github.carloshdx2.pangeia.PangeiaCore;
 import io.github.carloshdx2.pangeia.mochila.DefinicaoMochila;
+import io.github.carloshdx2.pangeia.pergaminho.DefinicaoPergaminho;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +42,13 @@ public final class ComandoPangeia implements TabExecutor {
                 }
                 darMochila(remetente, argumentos[2], argumentos[3]);
             }
+            case "pergaminho" -> {
+                if (argumentos.length != 4 || !argumentos[1].equalsIgnoreCase("dar")) {
+                    remetente.sendMessage(ChatColor.RED + "Uso: /pangeia pergaminho dar <jogador> <tipo>");
+                    return true;
+                }
+                darPergaminho(remetente, argumentos[2], argumentos[3]);
+            }
             case "recursos" -> remetente.sendMessage(ChatColor.GRAY + plugin.servicoResetMundo().status());
             default -> enviarAjuda(remetente);
         }
@@ -68,8 +76,29 @@ public final class ComandoPangeia implements TabExecutor {
         remetente.sendMessage(ChatColor.GREEN + "Mochila " + tipo + " entregue para " + jogador.getName() + ".");
     }
 
+    private void darPergaminho(CommandSender remetente, String nomeJogador, String tipo) {
+        Player jogador = Bukkit.getPlayerExact(nomeJogador);
+        if (jogador == null) {
+            remetente.sendMessage(ChatColor.RED + "Jogador " + nomeJogador + " não está online.");
+            return;
+        }
+        DefinicaoPergaminho definicao = plugin.servicoPergaminho().definicao(tipo);
+        if (definicao == null) {
+            remetente.sendMessage(ChatColor.RED + "Tipo de pergaminho desconhecido: " + tipo);
+            return;
+        }
+
+        ItemStack pergaminho = plugin.servicoPergaminho().itens().criar(definicao);
+        if (!jogador.getInventory().addItem(pergaminho).isEmpty()) {
+            jogador.getWorld().dropItemNaturally(jogador.getLocation(), pergaminho);
+            jogador.sendMessage(ChatColor.YELLOW + "Seu pergaminho caiu no chão porque o inventário estava cheio.");
+        }
+        remetente.sendMessage(ChatColor.GREEN + "Pergaminho " + tipo + " entregue para " + jogador.getName() + ".");
+    }
+
     private void enviarAjuda(CommandSender remetente) {
         remetente.sendMessage(ChatColor.GRAY + "/pangeia mochila dar <jogador> <tipo>");
+        remetente.sendMessage(ChatColor.GRAY + "/pangeia pergaminho dar <jogador> <tipo>");
         remetente.sendMessage(ChatColor.GRAY + "/pangeia recursos");
         remetente.sendMessage(ChatColor.GRAY + "/pangeia reload");
     }
@@ -77,12 +106,13 @@ public final class ComandoPangeia implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender remetente, Command comando, String rotulo, String[] argumentos) {
         if (argumentos.length == 1) {
-            return filtrar(List.of("mochila", "recursos", "reload"), argumentos[0]);
+            return filtrar(List.of("mochila", "pergaminho", "recursos", "reload"), argumentos[0]);
         }
-        if (argumentos.length == 2 && argumentos[0].equalsIgnoreCase("mochila")) {
+        boolean subcomandoComDar = argumentos[0].equalsIgnoreCase("mochila") || argumentos[0].equalsIgnoreCase("pergaminho");
+        if (argumentos.length == 2 && subcomandoComDar) {
             return filtrar(List.of("dar"), argumentos[1]);
         }
-        if (argumentos.length == 3 && argumentos[0].equalsIgnoreCase("mochila")) {
+        if (argumentos.length == 3 && subcomandoComDar) {
             List<String> nomes = new ArrayList<>();
             for (Player jogador : Bukkit.getOnlinePlayers()) {
                 nomes.add(jogador.getName());
@@ -91,6 +121,9 @@ public final class ComandoPangeia implements TabExecutor {
         }
         if (argumentos.length == 4 && argumentos[0].equalsIgnoreCase("mochila")) {
             return filtrar(plugin.servicoMochila().tipos(), argumentos[3]);
+        }
+        if (argumentos.length == 4 && argumentos[0].equalsIgnoreCase("pergaminho")) {
+            return filtrar(plugin.servicoPergaminho().tipos(), argumentos[3]);
         }
         return Collections.emptyList();
     }

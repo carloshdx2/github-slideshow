@@ -83,18 +83,40 @@ lp creategroup cargo-aurora
 lp group cargo-aurora permission set pangeia.cargo.aurora true
 ```
 
+- [ ] **Se o seu usuário for op, rode `deop SEU_NICK` primeiro**: op responde
+      `true` pra qualquer permissão, então a mochila abriria mesmo sem o
+      cargo e o teste não valeria nada
 - [ ] `/pangeia mochila dar SEU_NICK cargo_aurora` e tentar abrir **sem** o
       cargo → recusado com mensagem
 - [ ] `lp user SEU_NICK parent add cargo-aurora`, reconectar, abrir → funciona
+- [ ] `op SEU_NICK` de volta no console quando terminar
 
 Se quiser já deixar todos os grupos de profissão criados, rode o
 [bootstrap completo](./config/luckperms/bootstrap-commands.txt).
 
-### Etapa 3 — + Oraxen e ValhallaMMO (itens e receitas)
+### Pergaminho de teleporte (não precisa mais de Oraxen)
 
-Essa etapa é a mais trabalhosa e pode ficar pra depois. É o que valida o
-pergaminho de teleporte e o filtro de mochila sobre itens customizados,
-porque ambos dependem do ID do Oraxen gravado no item.
+O Oraxen ficou pago depois que o plano original foi escrito, então o
+pergaminho de teleporte virou um item nativo do `PangeiaCore` — mesmo
+padrão das mochilas, sem depender de nenhum plugin de itens customizados.
+
+```
+/pangeia pergaminho dar SEU_NICK pergaminho_teleporte
+```
+
+- [ ] Clique direito → aparece "Lendo o pergaminho... fique parado e sem
+      levar dano."
+- [ ] Fica parado ~3s sem levar dano → teleporta e o item **é consumido**
+- [ ] Clique direito de novo, mas leva dano antes de completar → aparece
+      "A leitura do pergaminho foi interrompida.", **não** teleporta e o
+      item **não** é consumido
+
+### Etapa 3 — + Oraxen e ValhallaMMO (itens e receitas, opcional)
+
+Essa etapa fica pra quando (e se) decidir comprar o Oraxen — hoje ele é
+pago, não é mais parte do stack grátis original. Ela validaria o filtro de
+mochila sobre itens customizados via ID do Oraxen (`oraxen:<id>` na lista
+de `itens-por-profissao`), que ainda não foi testado.
 
 Ver [plugins-checklist.md](./plugins-checklist.md) para a instalação e
 [docs/itens-oraxen-valhalla.md](../docs/itens-oraxen-valhalla.md) para os

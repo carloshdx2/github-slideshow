@@ -57,9 +57,28 @@ Outras proteções que vieram junto:
 - **Cargo**: a checagem é a permissão `pangeia.cargo.<nome>`, que o LuckPerms
   já concede pelo grupo criado no [bloco 3](./fundacao-permissoes.md). Não há
   dependência de compilação com o LuckPerms — é só `hasPermission`.
-- **Itens do Oraxen**: o plugin lê o ID do Oraxen direto do PDC do item, sem
-  depender da API dele em tempo de compilação (menos acoplamento, menos
-  quebra a cada update do Oraxen).
+- **Cuidado ao testar a trava de cargo com um jogador op**: op no Bukkit
+  responde `true` pra qualquer `hasPermission`, então a mochila abre mesmo
+  sem o grupo do LuckPerms — não é a trava funcionando, é o teste mascarado.
+  Precisa fazer `deop` no jogador de teste pra validar de verdade.
+- **Itens do Oraxen**: quando existirem, o plugin lê o ID do Oraxen direto do
+  PDC do item, sem depender da API dele em tempo de compilação (menos
+  acoplamento, menos quebra a cada update do Oraxen). Hoje isso só é
+  fallback — o Oraxen não está instalado (ver "Mudança de arquitetura"
+  abaixo).
+- **Mudança de arquitetura: pergaminho não depende mais do Oraxen**. O
+  Oraxen deixou de ser gratuito (era a suposição do
+  [bloco 2](./infraestrutura.md) quando isso foi pesquisado — mudou desde
+  então). Sem substituto gratuito maduro no mercado, o pergaminho de
+  teleporte passou a ser um item nativo do `PangeiaCore`, no mesmo padrão
+  das mochilas: tag própria no PDC (`pergaminho_tipo`) em vez do ID do
+  Oraxen, definido em `pergaminhos.tipos` no `config.yml` e entregue por
+  `/pangeia pergaminho dar <jogador> <tipo>`. A "textura" por enquanto é o
+  material vanilla puro (`PAPER`); o resto do catálogo do
+  [bloco 4](./itens-oraxen-valhalla.md) (minérios, pó, pedras de alma,
+  poções) ainda depende dessa mesma decisão — **não foi migrado**, fica em
+  aberto pra quando você decidir entre comprar o Oraxen ou desenhar os
+  itens na mão.
 - **Pergaminho com tempo de conjuração**: proposital. Teleporte instantâneo
   num servidor com PvP e sem `/spawn` viraria rota de fuga garantida —
   levar dano cancela a leitura, e o pergaminho só é consumido no fim.
@@ -108,14 +127,23 @@ Rodado em servidor real, sem nenhum outro plugin instalado:
 - [x] Morrer com a `mistica_comum` → a mochila **cai** normalmente
 - [x] `/pangeia recursos` responde
 
+Com **LuckPerms** instalado:
+
+- [x] Sem o cargo (e sem ser op), tentar abrir a `cargo_aurora` → recusada
+      com mensagem
+- [x] Com `lp user <voce> parent add cargo-aurora` + reconectar → abre
+
+Pergaminho de teleporte (item nativo do `PangeiaCore`, sem Oraxen — ver
+"Mudança de arquitetura" acima):
+
+- [x] `/pangeia pergaminho dar <voce> pergaminho_teleporte` entrega o item
+- [x] Clique direito → mensagem de conjuração, ~3s parado → teleporta e o
+      item é consumido
+- [x] Clique direito e levar dano antes de terminar → mensagem de
+      cancelamento, **não** teleporta e o item **não** é consumido
+
 ### Ainda não validado (depende de outros plugins)
 
-- [ ] Sem o cargo, tentar abrir a `cargo_aurora` → recusa — **precisa do
-      LuckPerms**
-- [ ] Com `lp user <voce> parent add cargo-aurora`, abre
-- [ ] Pergaminho de teleporte — **precisa do Oraxen**, porque o plugin
-      identifica o pergaminho pelo ID do Oraxen gravado no item. Sem ele
-      não existe item que dispare o efeito
 - [ ] Com `reset-mundo-recursos.ativado: true` e um `intervalo-dias` curto
       só para teste, conferir que os avisos chegam e que o mundo regenera
       (teste isso num mundo descartável, nunca no principal)

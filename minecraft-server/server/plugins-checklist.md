@@ -13,9 +13,13 @@ oficial linkada — evite mirrors/sites de "download grátis" genéricos.
 
 ## Conteúdo e progressão
 
-- [ ] **Oraxen** — https://github.com/oraxen/oraxen (itens/texturas
-      customizadas: minérios, pó, fragmentos, pedras de alma, poções, chaves,
-      pergaminhos)
+- [ ] **Oraxen** (opcional/em aberto) — https://github.com/oraxen/oraxen —
+      **ficou pago** (licença via SpigotMC/BuiltByBit), ao contrário do que
+      a pesquisa original do bloco 2 assumiu. O pergaminho de teleporte já
+      não depende mais dele (virou item nativo do `PangeiaCore`); só
+      instale se decidir comprar pra fazer minérios/pó/pedras de
+      alma/poções com resource pack automático. Ver
+      [docs/pangeia-core.md](../docs/pangeia-core.md#detalhes-que-valem-saber).
 - [ ] **ValhallaMMO** — https://www.spigotmc.org/resources/valhallammo-1-19-1-21-11.94921/
       (skills, receitas por bancada própria — base do sistema de ferreiro)
 - [ ] **ValhallaRaces** (avaliar licença antes) — https://www.spigotmc.org/resources/valhallaraces-valhallammo-add-on-fantasy-roleplay-create-your-own-races-and-classes.103321/
@@ -69,8 +73,12 @@ GitHub Actions (aba **Actions** → **Build PangeiaCore** → artefato).
 - [x] Testado em servidor local: mochilas, filtro de profissão, ligamento e
       persistência após restart passaram (ver
       [docs/pangeia-core.md](../docs/pangeia-core.md#checklist-de-teste-em-jogo))
-- [ ] Testar a trava por cargo (precisa do LuckPerms instalado)
-- [ ] Testar o pergaminho de teleporte (precisa do Oraxen instalado)
+- [x] Testar a trava por cargo (precisa do LuckPerms instalado)
+- [x] Testar o pergaminho de teleporte — **deixou de precisar do Oraxen**:
+      o Oraxen ficou pago, e o pergaminho virou item nativo do
+      `PangeiaCore` (ver [docs/pangeia-core.md](../docs/pangeia-core.md)).
+      O resto do catálogo de itens do bloco 4 (minérios, pó, pedras de
+      alma, poções) continua dependendo dessa mesma decisão em aberto.
 - [ ] Invocações: vitalidade, evolução, skins raras/sazonais, aluguel 3 dias
 - [ ] Trava de item de luz/trevas no mercado negro
 - [ ] Níveis de profissão 0/3/5/7 (gate de receitas por tier — hoje o
