@@ -1,6 +1,10 @@
 package io.github.carloshdx2.pangeia;
 
 import io.github.carloshdx2.pangeia.comando.ComandoPangeia;
+import io.github.carloshdx2.pangeia.invocacao.DefinicaoInvocacao;
+import io.github.carloshdx2.pangeia.invocacao.ItensInvocacao;
+import io.github.carloshdx2.pangeia.invocacao.OuvinteInvocacao;
+import io.github.carloshdx2.pangeia.invocacao.ServicoInvocacao;
 import io.github.carloshdx2.pangeia.ligamento.OuvinteLigamento;
 import io.github.carloshdx2.pangeia.ligamento.ServicoLigamento;
 import io.github.carloshdx2.pangeia.mochila.ArmazenamentoMochila;
@@ -15,10 +19,12 @@ import io.github.carloshdx2.pangeia.pergaminho.ItensPergaminho;
 import io.github.carloshdx2.pangeia.pergaminho.OuvintePergaminho;
 import io.github.carloshdx2.pangeia.pergaminho.ServicoPergaminho;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PangeiaCore extends JavaPlugin {
@@ -26,6 +32,7 @@ public final class PangeiaCore extends JavaPlugin {
     private ServicoMochila servicoMochila;
     private ServicoLigamento servicoLigamento;
     private ServicoPergaminho servicoPergaminho;
+    private ServicoInvocacao servicoInvocacao;
     private ServicoResetMundo servicoResetMundo;
     private FiltroProfissao filtroProfissao;
     private int tarefaAutosave = -1;
@@ -40,6 +47,7 @@ public final class PangeiaCore extends JavaPlugin {
         servicoMochila = new ServicoMochila(this, new ArmazenamentoMochila(this), itens, filtroProfissao);
         servicoLigamento = new ServicoLigamento(chaves);
         servicoPergaminho = new ServicoPergaminho(this, new ItensPergaminho(chaves));
+        servicoInvocacao = new ServicoInvocacao(chaves, new ItensInvocacao(chaves));
         servicoResetMundo = new ServicoResetMundo(this);
 
         aplicarConfiguracao();
@@ -47,6 +55,7 @@ public final class PangeiaCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OuvinteMochila(servicoMochila, itens), this);
         getServer().getPluginManager().registerEvents(new OuvinteLigamento(servicoLigamento), this);
         getServer().getPluginManager().registerEvents(new OuvintePergaminho(servicoPergaminho), this);
+        getServer().getPluginManager().registerEvents(new OuvinteInvocacao(servicoInvocacao), this);
 
         PluginCommand comando = getCommand("pangeia");
         if (comando != null) {
@@ -84,6 +93,7 @@ public final class PangeiaCore extends JavaPlugin {
         servicoLigamento.carregar(getConfig().getConfigurationSection("ligamento"));
         servicoPergaminho.carregar(getConfig().getConfigurationSection("pergaminhos"));
         servicoPergaminho.definirDefinicoes(carregarDefinicoesPergaminho());
+        servicoInvocacao.definirDefinicoes(carregarDefinicoesInvocacao());
         servicoResetMundo.carregar(getConfig().getConfigurationSection("reset-mundo-recursos"));
         reagendarAutosave();
     }
@@ -168,12 +178,58 @@ public final class PangeiaCore extends JavaPlugin {
         return definicoes;
     }
 
+    private Map<String, DefinicaoInvocacao> carregarDefinicoesInvocacao() {
+        Map<String, DefinicaoInvocacao> definicoes = new LinkedHashMap<>();
+        ConfigurationSection tipos = getConfig().getConfigurationSection("invocacoes.tipos");
+        if (tipos == null) {
+            return definicoes;
+        }
+
+        for (String id : tipos.getKeys(false)) {
+            ConfigurationSection secao = tipos.getConfigurationSection(id);
+            if (secao == null) {
+                continue;
+            }
+            String nomeMaterial = secao.getString("material", "PAPER");
+            Material material = Material.matchMaterial(nomeMaterial);
+            if (material == null) {
+                getLogger().warning("Invocação " + id + " ignorada: material desconhecido " + nomeMaterial + ".");
+                continue;
+            }
+            String nomeEntidade = secao.getString("entidade", "");
+            EntityType entidade;
+            try {
+                entidade = EntityType.valueOf(nomeEntidade.toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException excecao) {
+                getLogger().warning("Invocação " + id + " ignorada: entidade desconhecida " + nomeEntidade + ".");
+                continue;
+            }
+            Integer customModelData = secao.contains("custom-model-data")
+                    ? secao.getInt("custom-model-data")
+                    : null;
+
+            definicoes.put(id, new DefinicaoInvocacao(
+                    id,
+                    secao.getString("nome", id),
+                    secao.getString("categoria", ""),
+                    entidade,
+                    material,
+                    customModelData,
+                    secao.getStringList("lore")));
+        }
+        return definicoes;
+    }
+
     public ServicoMochila servicoMochila() {
         return servicoMochila;
     }
 
     public ServicoPergaminho servicoPergaminho() {
         return servicoPergaminho;
+    }
+
+    public ServicoInvocacao servicoInvocacao() {
+        return servicoInvocacao;
     }
 
     public ServicoResetMundo servicoResetMundo() {

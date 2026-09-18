@@ -1,6 +1,7 @@
 package io.github.carloshdx2.pangeia.comando;
 
 import io.github.carloshdx2.pangeia.PangeiaCore;
+import io.github.carloshdx2.pangeia.invocacao.DefinicaoInvocacao;
 import io.github.carloshdx2.pangeia.mochila.DefinicaoMochila;
 import io.github.carloshdx2.pangeia.pergaminho.DefinicaoPergaminho;
 import java.util.ArrayList;
@@ -49,6 +50,13 @@ public final class ComandoPangeia implements TabExecutor {
                 }
                 darPergaminho(remetente, argumentos[2], argumentos[3]);
             }
+            case "invocacao" -> {
+                if (argumentos.length != 4 || !argumentos[1].equalsIgnoreCase("dar")) {
+                    remetente.sendMessage(ChatColor.RED + "Uso: /pangeia invocacao dar <jogador> <tipo>");
+                    return true;
+                }
+                darInvocacao(remetente, argumentos[2], argumentos[3]);
+            }
             case "recursos" -> remetente.sendMessage(ChatColor.GRAY + plugin.servicoResetMundo().status());
             default -> enviarAjuda(remetente);
         }
@@ -96,9 +104,30 @@ public final class ComandoPangeia implements TabExecutor {
         remetente.sendMessage(ChatColor.GREEN + "Pergaminho " + tipo + " entregue para " + jogador.getName() + ".");
     }
 
+    private void darInvocacao(CommandSender remetente, String nomeJogador, String tipo) {
+        Player jogador = Bukkit.getPlayerExact(nomeJogador);
+        if (jogador == null) {
+            remetente.sendMessage(ChatColor.RED + "Jogador " + nomeJogador + " não está online.");
+            return;
+        }
+        DefinicaoInvocacao definicao = plugin.servicoInvocacao().definicao(tipo);
+        if (definicao == null) {
+            remetente.sendMessage(ChatColor.RED + "Tipo de invocação desconhecido: " + tipo);
+            return;
+        }
+
+        ItemStack item = plugin.servicoInvocacao().itens().criar(definicao);
+        if (!jogador.getInventory().addItem(item).isEmpty()) {
+            jogador.getWorld().dropItemNaturally(jogador.getLocation(), item);
+            jogador.sendMessage(ChatColor.YELLOW + "Seu item de invocação caiu no chão porque o inventário estava cheio.");
+        }
+        remetente.sendMessage(ChatColor.GREEN + "Invocação " + tipo + " entregue para " + jogador.getName() + ".");
+    }
+
     private void enviarAjuda(CommandSender remetente) {
         remetente.sendMessage(ChatColor.GRAY + "/pangeia mochila dar <jogador> <tipo>");
         remetente.sendMessage(ChatColor.GRAY + "/pangeia pergaminho dar <jogador> <tipo>");
+        remetente.sendMessage(ChatColor.GRAY + "/pangeia invocacao dar <jogador> <tipo>");
         remetente.sendMessage(ChatColor.GRAY + "/pangeia recursos");
         remetente.sendMessage(ChatColor.GRAY + "/pangeia reload");
     }
@@ -106,9 +135,11 @@ public final class ComandoPangeia implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender remetente, Command comando, String rotulo, String[] argumentos) {
         if (argumentos.length == 1) {
-            return filtrar(List.of("mochila", "pergaminho", "recursos", "reload"), argumentos[0]);
+            return filtrar(List.of("mochila", "pergaminho", "invocacao", "recursos", "reload"), argumentos[0]);
         }
-        boolean subcomandoComDar = argumentos[0].equalsIgnoreCase("mochila") || argumentos[0].equalsIgnoreCase("pergaminho");
+        boolean subcomandoComDar = argumentos[0].equalsIgnoreCase("mochila")
+                || argumentos[0].equalsIgnoreCase("pergaminho")
+                || argumentos[0].equalsIgnoreCase("invocacao");
         if (argumentos.length == 2 && subcomandoComDar) {
             return filtrar(List.of("dar"), argumentos[1]);
         }
@@ -124,6 +155,9 @@ public final class ComandoPangeia implements TabExecutor {
         }
         if (argumentos.length == 4 && argumentos[0].equalsIgnoreCase("pergaminho")) {
             return filtrar(plugin.servicoPergaminho().tipos(), argumentos[3]);
+        }
+        if (argumentos.length == 4 && argumentos[0].equalsIgnoreCase("invocacao")) {
+            return filtrar(plugin.servicoInvocacao().tipos(), argumentos[3]);
         }
         return Collections.emptyList();
     }

@@ -226,3 +226,20 @@ pergaminhos:
       z: 0.5
       yaw: 0.0
       pitch: 0.0
+
+# Invocações (bloco 6) — esqueleto genérico só. Nenhuma mecânica por
+# categoria ainda (vitalidade, evolução, skins, aluguel): o clique direito
+# no item só chama/dispensa a "entidade" configurada, vinculada ao dono.
+# Ver docs/invocacoes-e-locomocao.md e docs/pangeia-core.md.
+invocacoes:
+  tipos:
+    # Exemplo mínimo pra provar o esqueleto — não é um tipo de produção.
+    elemental_lobo_teste:
+      nome: '&fInvocação: Lobo'
+      categoria: elemental
+      entidade: WOLF
+      material: BONE
+      custom-model-data: 18001
+      lore:
+        - '&7Clique com o botão direito para'
+        - '&7chamar ou dispensar a invocação.'

@@ -48,7 +48,8 @@ Outras proteções que vieram junto:
 | **Pergaminho de teleporte** (com tempo de conjuração) | Pronto |
 | Comando `/pangeia mochila dar` (usado também pelo Tebex) | Pronto |
 | **Reset agendado do mundo de recursos** | Pronto (desligado por padrão) |
-| Invocações (vitalidade, skins, aluguel) | Não começou |
+| **Invocações — esqueleto genérico** (chamar/dispensar entidade vinculada ao dono) | Pronto |
+| Invocações — os 4 tipos de verdade, vitalidade, skins, aluguel | Não começou |
 | Trava de luz/trevas no mercado negro | Não começou |
 | Gate de receita por tier de profissão | Não começou (hoje o ValhallaMMO já resolve por permissão) |
 
@@ -82,6 +83,21 @@ Outras proteções que vieram junto:
 - **Pergaminho com tempo de conjuração**: proposital. Teleporte instantâneo
   num servidor com PvP e sem `/spawn` viraria rota de fuga garantida —
   levar dano cancela a leitura, e o pergaminho só é consumido no fim.
+- **Invocações (bloco 6) é só o esqueleto ainda**: item que chama/dispensa
+  uma entidade vinculada ao dono (`invocacoes.tipos` no `config.yml`,
+  `/pangeia invocacao dar <jogador> <tipo>`), sem consumir o item — é um
+  "chamador" permanente, não descartável como o pergaminho. Diferente das
+  mochilas/pergaminhos, a persistência da entidade entre restart é a
+  nativa do Minecraft (ela é salva no chunk como qualquer mob), não um
+  arquivo próprio. **Nenhum dos 4 tipos do design** (elemental, montaria
+  terrestre/voadora/submersa) tem mecânica de verdade ainda — a categoria é
+  só um campo de dados por enquanto. Vitalidade, evolução, skins e aluguel
+  seguem **[em aberto]**, como já estavam nas notas originais. Pesquisei
+  construir isso em cima do MythicMobs (sugestão do
+  [bloco 2](./infraestrutura.md)): a versão free continua grátis, mas
+  **montaria não vem nela** — precisaria do addon AdvancedPet + ModelEngine
+  (ModelEngine é pago, mesmo problema do Oraxen) — por isso o esqueleto é
+  100% nativo no `PangeiaCore`, sem essa dependência.
 - **Material-base das mochilas**: `LEATHER`, não `BUNDLE`. O bundle do
   vanilla tem armazenamento próprio e brigaria com o nosso.
 - **Reset do mundo de recursos**: vem **desligado** na config. Regenerar um
@@ -142,6 +158,14 @@ Pergaminho de teleporte (item nativo do `PangeiaCore`, sem Oraxen — ver
 - [x] Clique direito e levar dano antes de terminar → mensagem de
       cancelamento, **não** teleporta e o item **não** é consumido
 
+Invocações (esqueleto genérico, sem mecânica por categoria ainda):
+
+- [x] `/pangeia invocacao dar <voce> elemental_lobo_teste` entrega o item
+- [x] Clique direito → chama um lobo manso vinculado a você (confirmado
+      via NBT: `Owner` setado, tag `invocacao_dono` batendo com o UUID do
+      jogador)
+- [x] Clique direito de novo → dispensa (lobo removido do mundo)
+
 ### Ainda não validado (depende de outros plugins)
 
 - [ ] Com `reset-mundo-recursos.ativado: true` e um `intervalo-dias` curto
@@ -166,7 +190,11 @@ Pergaminho de teleporte (item nativo do `PangeiaCore`, sem Oraxen — ver
 
 ## Próximos passos sugeridos
 
-- Testar em servidor de teste com a checklist acima.
-- **Bloco 6**: invocações (vitalidade, evolução, skins raras/sazonais,
-  aluguel por 3 dias) — é o maior módulo que sobrou. A alternativa menor é
+- Testar em servidor de teste com a checklist acima (inclui o esqueleto de
+  invocações, que só rodou `mvn package` até agora).
+- **Bloco 6, continuação**: escolher 1 dos 4 tipos de invocação (elemental
+  de combate, montaria terrestre/voadora/submersa) e dar mecânica de
+  verdade em cima do esqueleto — voadora/submersa em particular ainda não
+  têm uma abordagem técnica decidida (Minecraft não tem "montaria voadora"
+  nativa). Vitalidade/skins/aluguel seguem em aberto. A alternativa menor é
   a trava de luz/trevas do mercado negro, que depende da API do WorldGuard.

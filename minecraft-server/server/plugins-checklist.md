@@ -79,7 +79,14 @@ GitHub Actions (aba **Actions** → **Build PangeiaCore** → artefato).
       `PangeiaCore` (ver [docs/pangeia-core.md](../docs/pangeia-core.md)).
       O resto do catálogo de itens do bloco 4 (minérios, pó, pedras de
       alma, poções) continua dependendo dessa mesma decisão em aberto.
-- [ ] Invocações: vitalidade, evolução, skins raras/sazonais, aluguel 3 dias
+- [x] Invocações — **esqueleto genérico** (bloco 6): item chama/dispensa
+      uma entidade vinculada ao dono (`/pangeia invocacao dar`), 100%
+      nativo no `PangeiaCore` (MythicMobs free não cobre montaria sem um
+      addon pago — mesmo problema do Oraxen, então não virou dependência).
+      Testado em jogo: chamar e dispensar um lobo de exemplo, confirmado
+      via NBT (ver [docs/pangeia-core.md](../docs/pangeia-core.md)).
+- [ ] Invocações: os 4 tipos de verdade (elemental/terrestre/voadora/
+      submersa), vitalidade, evolução, skins raras/sazonais, aluguel 3 dias
 - [ ] Trava de item de luz/trevas no mercado negro
 - [ ] Níveis de profissão 0/3/5/7 (gate de receitas por tier — hoje o
       ValhallaMMO já resolve via permissão, só entra aqui se precisarmos de
