@@ -47,7 +47,7 @@ public final class PangeiaCore extends JavaPlugin {
         servicoMochila = new ServicoMochila(this, new ArmazenamentoMochila(this), itens, filtroProfissao);
         servicoLigamento = new ServicoLigamento(chaves);
         servicoPergaminho = new ServicoPergaminho(this, new ItensPergaminho(chaves));
-        servicoInvocacao = new ServicoInvocacao(chaves, new ItensInvocacao(chaves));
+        servicoInvocacao = new ServicoInvocacao(this, chaves, new ItensInvocacao(chaves));
         servicoResetMundo = new ServicoResetMundo(this);
 
         aplicarConfiguracao();
@@ -72,6 +72,9 @@ public final class PangeiaCore extends JavaPlugin {
         }
         if (servicoPergaminho != null) {
             servicoPergaminho.cancelarTudo();
+        }
+        if (servicoInvocacao != null) {
+            servicoInvocacao.encerrarTudo();
         }
         if (servicoResetMundo != null) {
             servicoResetMundo.parar();

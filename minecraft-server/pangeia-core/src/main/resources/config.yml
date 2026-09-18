@@ -262,3 +262,22 @@ invocacoes:
       lore:
         - '&7Clique com o botão direito para'
         - '&7chamar ou dispensar a montaria.'
+
+    # Primeira montaria voadora "de verdade". Nenhuma entidade vanilla é
+    # montável E voadora ao mesmo tempo — o item concede voo de verdade ao
+    # jogador (como criativo) e o fantasma vira uma escolta cosmética que
+    # segue por perto, não um veículo. "velocidade" aqui vira a velocidade
+    # de voo do jogador (fly speed), não um atributo da entidade.
+    montaria_fantasma_pangeia:
+      nome: '&5Montaria: Fantasma Etéreo'
+      categoria: voadora
+      entidade: PHANTOM
+      material: FEATHER
+      custom-model-data: 18201
+      # fly speed vanilla vai de -1 a 1 (padrão do jogador é 0.1).
+      velocidade: 0.2
+      vida: 20.0
+      lore:
+        - '&7Clique com o botão direito para'
+        - '&7voar (ou pousar dispensando a montaria).'
+        - '&7Item delicado — use com carinho.'

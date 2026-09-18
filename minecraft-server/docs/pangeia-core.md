@@ -50,7 +50,8 @@ Outras proteções que vieram junto:
 | **Reset agendado do mundo de recursos** | Pronto (desligado por padrão) |
 | **Invocações — esqueleto genérico** (chamar/dispensar entidade vinculada ao dono) | Pronto |
 | **Invocações — montaria terrestre** (atributos/cor fixos, sela+monta automático) | Pronto |
-| Invocações — elemental/voadora/submersa de verdade, vitalidade, skins, aluguel | Não começou |
+| **Invocações — montaria voadora** (voo de verdade + escolta cosmética) | Pronto |
+| Invocações — elemental de combate e submersa de verdade, vitalidade, skins, aluguel | Não começou |
 | Trava de luz/trevas no mercado negro | Não começou |
 | Gate de receita por tier de profissão | Não começou (hoje o ValhallaMMO já resolve por permissão) |
 
@@ -100,9 +101,24 @@ Outras proteções que vieram junto:
   chamada spawnaria um cavalo com stats e cor **aleatórios** do vanilla
   (é assim que o Minecraft gera cavalo por padrão), o que não combina com
   um mascote específico seu. Esses valores não evoluem ainda (vitalidade
-  segue **[em aberto]**, como nas notas originais). Elemental/voadora/
-  submersa ainda não têm mecânica própria — a categoria hoje é só um campo
-  de dados.
+  segue **[em aberto]**, como nas notas originais). Elemental e submersa
+  ainda não têm mecânica própria — a categoria hoje é só um campo de dados
+  pra essas duas.
+- **Montaria voadora não é um veículo — é voo de verdade + escolta**.
+  Nenhuma entidade vanilla é ao mesmo tempo montável e voadora
+  controlável (cavalo não voa, fantasma/morcego não têm assento pra
+  passageiro dirigir). A saída real: o item dá `setAllowFlight`+
+  `setFlying` de verdade ao jogador (funciona em survival, não precisa
+  virar criativo) e a entidade configurada (fantasma, por padrão) vira uma
+  escolta cosmética — sem IA, sem gravidade e **invulnerável** enquanto o
+  voo está ativo (senão um mob de passagem derruba a escolta e o jogador
+  cai do céu sem aviso), sincronizada por uma tarefa própria que a
+  teleporta pra perto do jogador a cada 2 ticks. O campo `velocidade` do
+  tipo voador vira a velocidade de voo do jogador (`flySpeed`), não um
+  atributo da entidade. Ao dispensar (ou desligar o servidor com alguém
+  voando — ver `encerrarTudo()`), o voo é revogado; se o jogador já
+  estivesse em criativo/spectator antes, nada é mexido (não faz sentido
+  "revogar" voo que já era dele por outro motivo).
 - **Material-base das mochilas**: `LEATHER`, não `BUNDLE`. O bundle do
   vanilla tem armazenamento próprio e brigaria com o nosso.
 - **Reset do mundo de recursos**: vem **desligado** na config. Regenerar um
@@ -181,6 +197,16 @@ Invocações — montaria terrestre (primeiro tipo com mecânica de verdade):
       específico
 - [x] Clique direito de novo → dispensa
 
+Invocações — montaria voadora (voo de verdade + escolta cosmética):
+
+- [x] `/pangeia invocacao dar <voce> montaria_fantasma_pangeia` entrega a pena
+- [x] Clique direito → ganha voo de verdade (mesmo em survival) e um
+      fantasma invulnerável, sem IA e sem gravidade aparece te
+      acompanhando — confirmado via NBT: `mayfly: 1b` com `instabuild: 0b`
+      (voo nosso, não é o jogador estar em criativo)
+- [x] Voar de verdade em survival, controlando a direção normalmente
+- [x] Clique direito de novo → pousa (voo revogado, fantasma removido)
+
 ### Ainda não validado (depende de outros plugins)
 
 - [ ] Com `reset-mundo-recursos.ativado: true` e um `intervalo-dias` curto
@@ -205,10 +231,11 @@ Invocações — montaria terrestre (primeiro tipo com mecânica de verdade):
 
 ## Próximos passos sugeridos
 
-- **Bloco 6, continuação**: elemental de combate, montaria voadora e
-  montaria submersa ainda não têm mecânica de verdade (só a montaria
-  terrestre tem, ver checklist acima) — voadora/submersa em particular
-  ainda não têm uma abordagem técnica decidida (Minecraft não tem
-  "montaria voadora" nativa). Vitalidade/skins/aluguel seguem em aberto. A
-  alternativa menor é a trava de luz/trevas do mercado negro, que depende
+- **Bloco 6, continuação**: elemental de combate e montaria submersa ainda
+  não têm mecânica de verdade (terrestre e voadora já têm, ver checklist
+  acima). Submersa provavelmente reaproveita a mesma técnica da voadora
+  (respirar embaixo d'água de verdade + escolta cosmética, em vez de um
+  "veículo" — golfinho/guardião não são montáveis no vanilla também).
+  Vitalidade/skins/aluguel seguem em aberto. A alternativa menor é a trava
+  de luz/trevas do mercado negro, que depende
   da API do WorldGuard.

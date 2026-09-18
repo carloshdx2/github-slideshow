@@ -3,13 +3,17 @@ package io.github.carloshdx2.pangeia.invocacao;
 import io.github.carloshdx2.pangeia.PangeiaChaves;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -22,20 +26,29 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 /**
- * Esqueleto genérico das invocações: um item chama/dispensa uma entidade vinculada ao dono.
- * Nenhuma mecânica por categoria (elemental/terrestre/voadora/submersa) ainda — só a base
- * comum aos 4 tipos do design (ver docs/invocacoes-e-locomocao.md).
+ * Invocações: um item chama/dispensa uma entidade vinculada ao dono. A base é comum aos 4
+ * tipos do design (ver docs/invocacoes-e-locomocao.md); montaria terrestre e voadora já têm
+ * mecânica própria, elemental e submersa ainda não.
  */
 public final class ServicoInvocacao {
 
+    private static final String CATEGORIA_VOADORA = "voadora";
+
+    private final Plugin plugin;
     private final PangeiaChaves chaves;
     private final ItensInvocacao itens;
     private final Map<UUID, UUID> ativas = new HashMap<>();
+    private final Map<UUID, BukkitTask> escoltas = new HashMap<>();
+    private final Set<UUID> vooConcedido = new HashSet<>();
     private Map<String, DefinicaoInvocacao> definicoes = new HashMap<>();
 
-    public ServicoInvocacao(PangeiaChaves chaves, ItensInvocacao itens) {
+    public ServicoInvocacao(Plugin plugin, PangeiaChaves chaves, ItensInvocacao itens) {
+        this.plugin = plugin;
         this.chaves = chaves;
         this.itens = itens;
     }
@@ -61,6 +74,7 @@ public final class ServicoInvocacao {
         UUID ativa = ativas.remove(jogadorId);
         if (ativa != null) {
             removerEntidade(ativa);
+            pararVoo(jogadorId);
             jogador.sendMessage(ChatColor.GRAY + "Invocação dispensada.");
             return;
         }
@@ -79,6 +93,10 @@ public final class ServicoInvocacao {
         if (entidade instanceof LivingEntity viva) {
             vincularAoDono(jogador, viva);
             aplicarAtributos(viva, definicao);
+        }
+
+        if (CATEGORIA_VOADORA.equalsIgnoreCase(definicao.categoria())) {
+            iniciarVoo(jogador, entidade, definicao);
         }
 
         ativas.put(jogadorId, entidade.getUniqueId());
@@ -141,11 +159,83 @@ public final class ServicoInvocacao {
         }
     }
 
+    /**
+     * Nenhuma entidade vanilla é ao mesmo tempo "montável" e "voadora controlável pelo
+     * jogador" (cavalo não voa, fantasma/morcego não têm assento). A saída real é dar voo
+     * de verdade ao jogador (como criativo) e usar a entidade como escolta cosmética que
+     * segue por uma tarefa própria — não como veículo.
+     */
+    private void iniciarVoo(Player jogador, Entity escolta, DefinicaoInvocacao definicao) {
+        UUID jogadorId = jogador.getUniqueId();
+        if (jogador.getGameMode() != GameMode.CREATIVE && jogador.getGameMode() != GameMode.SPECTATOR) {
+            jogador.setAllowFlight(true);
+            jogador.setFlying(true);
+            if (definicao.velocidade() != null) {
+                float velocidade = (float) Math.max(-1.0, Math.min(1.0, definicao.velocidade()));
+                jogador.setFlySpeed(velocidade);
+            }
+            vooConcedido.add(jogadorId);
+        }
+
+        escolta.setGravity(false);
+        if (escolta instanceof LivingEntity viva) {
+            viva.setAI(false);
+            // Sem isso um mob hostil de passagem derruba a escolta e o jogador cai do céu
+            // sem aviso — a invulnerabilidade dura só enquanto o voo está ativo.
+            viva.setInvulnerable(true);
+        }
+
+        UUID entidadeId = escolta.getUniqueId();
+        BukkitTask tarefa = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            Player jogadorAtual = Bukkit.getPlayer(jogadorId);
+            Entity entidadeAtual = Bukkit.getEntity(entidadeId);
+            if (jogadorAtual == null || !jogadorAtual.isOnline() || entidadeAtual == null || entidadeAtual.isDead()) {
+                return;
+            }
+            Location doJogador = jogadorAtual.getLocation();
+            Vector direcao = doJogador.getDirection().setY(0);
+            if (direcao.lengthSquared() > 0.0001) {
+                direcao.normalize();
+            }
+            Location alvo = doJogador.clone().subtract(direcao.multiply(2.5)).add(0, 1.0, 0);
+            alvo.setDirection(doJogador.getDirection());
+            entidadeAtual.teleport(alvo);
+        }, 1L, 2L);
+        escoltas.put(jogadorId, tarefa);
+    }
+
+    private void pararVoo(UUID jogadorId) {
+        BukkitTask tarefa = escoltas.remove(jogadorId);
+        if (tarefa != null) {
+            tarefa.cancel();
+        }
+        if (vooConcedido.remove(jogadorId)) {
+            Player jogador = Bukkit.getPlayer(jogadorId);
+            if (jogador != null && jogador.getGameMode() != GameMode.CREATIVE
+                    && jogador.getGameMode() != GameMode.SPECTATOR) {
+                jogador.setFlying(false);
+                jogador.setAllowFlight(false);
+            }
+        }
+    }
+
+    /**
+     * Sem isso, desligar o servidor com alguém em voo concedido deixaria a habilidade de
+     * voar gravada no jogador (o cliente persiste isso) — ele voltaria voando sem invocação
+     * nenhuma na próxima sessão.
+     */
+    public void encerrarTudo() {
+        for (UUID jogadorId : new ArrayList<>(vooConcedido)) {
+            pararVoo(jogadorId);
+        }
+    }
+
     public void dispensar(UUID jogadorId) {
         UUID ativa = ativas.remove(jogadorId);
         if (ativa != null) {
             removerEntidade(ativa);
         }
+        pararVoo(jogadorId);
     }
 
     /** Chamado quando qualquer entidade morre; só age se for uma invocação rastreada. */
@@ -155,7 +245,10 @@ public final class ServicoInvocacao {
             return;
         }
         try {
-            ativas.remove(UUID.fromString(donoBruto), entidade.getUniqueId());
+            UUID dono = UUID.fromString(donoBruto);
+            if (ativas.remove(dono, entidade.getUniqueId())) {
+                pararVoo(dono);
+            }
         } catch (IllegalArgumentException ignorado) {
             // PDC corrompido ou de outra fonte — nada a limpar.
         }

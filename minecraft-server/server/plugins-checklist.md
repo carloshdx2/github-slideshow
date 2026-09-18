@@ -88,9 +88,15 @@ GitHub Actions (aba **Actions** → **Build PangeiaCore** → artefato).
 - [x] Invocações — **montaria terrestre** com mecânica de verdade: atributos
       (velocidade/pulo/vida) e cor fixos na config, monta automaticamente
       já selado e domado. Testado em jogo.
-- [ ] Invocações: elemental de combate, montaria voadora e submersa (sem
-      abordagem técnica decidida ainda pras duas últimas), vitalidade,
-      evolução, skins raras/sazonais, aluguel 3 dias
+- [x] Invocações — **montaria voadora** com mecânica de verdade: como
+      nenhuma entidade vanilla é montável e voadora ao mesmo tempo, o item
+      dá voo de verdade ao jogador (funciona em survival) e a entidade
+      vira escolta cosmética (sem IA, sem gravidade, invulnerável).
+      Testado em jogo, confirmado via NBT que o voo não é do jogador estar
+      em criativo (`mayfly: 1b` com `instabuild: 0b`).
+- [ ] Invocações: elemental de combate e montaria submersa (sem abordagem
+      técnica decidida ainda), vitalidade, evolução, skins raras/sazonais,
+      aluguel 3 dias
 - [ ] Trava de item de luz/trevas no mercado negro
 - [ ] Níveis de profissão 0/3/5/7 (gate de receitas por tier — hoje o
       ValhallaMMO já resolve via permissão, só entra aqui se precisarmos de
