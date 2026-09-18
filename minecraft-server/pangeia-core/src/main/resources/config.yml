@@ -227,13 +227,13 @@ pergaminhos:
       yaw: 0.0
       pitch: 0.0
 
-# Invocações (bloco 6) — esqueleto genérico só. Nenhuma mecânica por
-# categoria ainda (vitalidade, evolução, skins, aluguel): o clique direito
-# no item só chama/dispensa a "entidade" configurada, vinculada ao dono.
-# Ver docs/invocacoes-e-locomocao.md e docs/pangeia-core.md.
+# Invocações (bloco 6). O clique direito no item chama/dispensa a
+# "entidade" configurada, vinculada ao dono. Vitalidade, evolução, skins e
+# aluguel ainda não existem — velocidade/pulo/vida abaixo são fixos, não
+# evoluem. Ver docs/invocacoes-e-locomocao.md e docs/pangeia-core.md.
 invocacoes:
   tipos:
-    # Exemplo mínimo pra provar o esqueleto — não é um tipo de produção.
+    # Exemplo mínimo do esqueleto — não é um tipo de produção.
     elemental_lobo_teste:
       nome: '&fInvocação: Lobo'
       categoria: elemental
@@ -243,3 +243,22 @@ invocacoes:
       lore:
         - '&7Clique com o botão direito para'
         - '&7chamar ou dispensar a invocação.'
+
+    # Primeira montaria terrestre "de verdade": atributos e aparência fixos
+    # (sem isso cada chamada spawnaria um cavalo com stats/cor aleatórios do
+    # vanilla, o que não combina com um mascote específico seu).
+    montaria_cavalo_pangeia:
+      nome: '&6Montaria: Corcel de Pangeia'
+      categoria: terrestre
+      entidade: HORSE
+      material: SADDLE
+      custom-model-data: 18101
+      # Referência vanilla: velocidade 0.1–0.3, pulo 0.4–1.0, vida 15–30.
+      velocidade: 0.225
+      pulo: 0.7
+      vida: 24.0
+      cor-cavalo: CHESTNUT
+      estilo-cavalo: NONE
+      lore:
+        - '&7Clique com o botão direito para'
+        - '&7chamar ou dispensar a montaria.'

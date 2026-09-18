@@ -4,14 +4,19 @@ import io.github.carloshdx2.pangeia.PangeiaChaves;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
@@ -73,6 +78,7 @@ public final class ServicoInvocacao {
         entidade.setCustomNameVisible(true);
         if (entidade instanceof LivingEntity viva) {
             vincularAoDono(jogador, viva);
+            aplicarAtributos(viva, definicao);
         }
 
         ativas.put(jogadorId, entidade.getUniqueId());
@@ -91,6 +97,47 @@ public final class ServicoInvocacao {
         if (entidade instanceof AbstractHorse cavalo) {
             cavalo.getInventory().setSaddle(new ItemStack(Material.SADDLE));
             cavalo.addPassenger(jogador);
+        }
+    }
+
+    /**
+     * Sem isso a montaria nasce com atributos aleatórios do vanilla (velocidade/pulo/vida
+     * variam a cada spawn) — não combina com uma invocação específica configurada. Também
+     * fixa cor/estilo do cavalo, senão cada chamada spawna uma aparência diferente.
+     */
+    private void aplicarAtributos(LivingEntity entidade, DefinicaoInvocacao definicao) {
+        aplicarAtributo(entidade, Attribute.GENERIC_MOVEMENT_SPEED, definicao.velocidade());
+        aplicarAtributo(entidade, Attribute.GENERIC_MAX_HEALTH, definicao.vida());
+        if (definicao.vida() != null) {
+            entidade.setHealth(definicao.vida());
+        }
+        if (entidade instanceof AbstractHorse) {
+            aplicarAtributo(entidade, Attribute.HORSE_JUMP_STRENGTH, definicao.pulo());
+        }
+        if (entidade instanceof Horse cavalo) {
+            aplicarEnum(definicao.corCavalo(), Horse.Color.class, cavalo::setColor);
+            aplicarEnum(definicao.estiloCavalo(), Horse.Style.class, cavalo::setStyle);
+        }
+    }
+
+    private void aplicarAtributo(LivingEntity entidade, Attribute atributo, Double valor) {
+        if (valor == null) {
+            return;
+        }
+        AttributeInstance instancia = entidade.getAttribute(atributo);
+        if (instancia != null) {
+            instancia.setBaseValue(valor);
+        }
+    }
+
+    private <E extends Enum<E>> void aplicarEnum(String valorConfigurado, Class<E> tipo, Consumer<E> aplicar) {
+        if (valorConfigurado == null || valorConfigurado.isBlank()) {
+            return;
+        }
+        try {
+            aplicar.accept(Enum.valueOf(tipo, valorConfigurado.toUpperCase(Locale.ROOT)));
+        } catch (IllegalArgumentException ignorado) {
+            // Valor inválido na config — mantém a aparência padrão da entidade em vez de falhar.
         }
     }
 

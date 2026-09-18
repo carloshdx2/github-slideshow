@@ -11,6 +11,11 @@ public record DefinicaoInvocacao(
         EntityType entidade,
         Material material,
         Integer customModelData,
-        List<String> lore
+        List<String> lore,
+        Double velocidade,
+        Double pulo,
+        Double vida,
+        String corCavalo,
+        String estiloCavalo
 ) {
 }

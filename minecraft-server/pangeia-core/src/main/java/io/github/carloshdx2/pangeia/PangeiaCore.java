@@ -215,7 +215,12 @@ public final class PangeiaCore extends JavaPlugin {
                     entidade,
                     material,
                     customModelData,
-                    secao.getStringList("lore")));
+                    secao.getStringList("lore"),
+                    secao.contains("velocidade") ? secao.getDouble("velocidade") : null,
+                    secao.contains("pulo") ? secao.getDouble("pulo") : null,
+                    secao.contains("vida") ? secao.getDouble("vida") : null,
+                    secao.getString("cor-cavalo"),
+                    secao.getString("estilo-cavalo")));
         }
         return definicoes;
     }
